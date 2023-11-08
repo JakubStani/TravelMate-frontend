@@ -1,0 +1,16 @@
+.login-signup-container{
+    display:flex;
+    gap: 30px;
+}
+
+.submit-container{
+    justify-content: center;
+}
+
+.submit-button{
+    color: white;
+    background-color: #8d00c4;
+    border: 4px white;
+    border-radius: 10;
+    font-size: 20px;
+}
