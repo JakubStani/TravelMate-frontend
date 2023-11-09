@@ -1,0 +1,21 @@
+.nav_container {
+    width: 100%;
+    position: fixed;
+    top: 0;
+}
+
+.navbar {
+    background-color: blueviolet;
+    padding: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.routes {
+    display: flex;
+    gap: 20px;
+}
+
+.routes a {
+    text-decoration: none;
+}
