@@ -1,8 +1,10 @@
 import React, {useState} from "react";
 import "./LoginSignup.css"
+import { Link, useNavigate } from "react-router-dom";
+
 
 const SignUp = (props) => {
-
+    const navigate = useNavigate();
     const [firstName, setFirstName] = useState('');
     const [lastName, setlastName] = useState('');
     const [email, setEmail] = useState('');
@@ -14,6 +16,7 @@ const SignUp = (props) => {
         const newUser = { firstName, lastName, email, password1};
 
         console.log(newUser); //TODO: add fetch POST method to send new user data to backend
+        navigate('/home');
     }
 
     return (
@@ -82,7 +85,7 @@ const SignUp = (props) => {
 
             <div className="login-signup-container">
                 <div className="submit">
-                    <button onClick={() => {props.updateLoginOrSignUp('Login')}}>Login</button>
+                    <Link to="/"><button onClick={() => {props.updateLoginOrSignUp('Login')}}>Login</button></Link>
                 </div>
             </div>
         </div>

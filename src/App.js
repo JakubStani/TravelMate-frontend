@@ -1,7 +1,9 @@
+import Home from './screens/Home';
 import './App.css';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 function App() {
 
@@ -15,15 +17,19 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        {
-          loginOrSignUp==="Login" ? 
-          <Login updateLoginOrSignUp={updateLoginOrSignUp} /> :
-          <SignUp updateLoginOrSignUp={updateLoginOrSignUp} />
-        }
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <div className='content'>
+          <header className="App-header">
+            <Routes>
+              <Route exact path='/' element={<Login updateLoginOrSignUp={updateLoginOrSignUp} />} />
+              <Route exact path='/sign-up' element={<SignUp updateLoginOrSignUp={updateLoginOrSignUp} />} />
+              <Route exact path='/home' element={<Home />} />
+            </Routes>
+          </header>
+        </div>
+      </div>
+    </Router>
   );
 }
 
