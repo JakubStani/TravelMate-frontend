@@ -33,7 +33,7 @@ function App() {
               <Route exact path='/' element={<Login updateLoginOrSignUp={updateLoginOrSignUp} />} />
               <Route exact path='/sign-up' element={<SignUp updateLoginOrSignUp={updateLoginOrSignUp} />} />
               <Route exact path='/home' element={<Home sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>} />
-              <Route exact path='/profile' element={<ProfileScreen />}></Route>
+              <Route exact path='/profile' element={<ProfileScreen sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
             </Routes>
           </header>
         </div>

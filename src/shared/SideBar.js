@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import Sidebar from 'react-sidebar'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function SideBar(props) {
 
+    const navigate = useNavigate();
+
     const sideBarContent = (
         <div>
-            <p>Account</p>
+            <p onClick={()=>navigate('/profile')}>Account</p>
             <p>Logout</p>
             <p>Settings</p>
             <p onClick={()=> props.toggleSideBar()}>X</p>
