@@ -7,19 +7,36 @@ const Login = (props) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [user, setUser]= useState({})
 
     const sendLoginData = (data) => {
         data.preventDefault();
-        const user = { email, password};
+        const userData = { email: email, password: password};  
+
+        fetch('https://travelmatebackend.azurewebsites.net/api/v1/auth/authenticate', {
+          method: 'POST',
+          body: JSON.stringify(userData),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+
+        /*.then((response) => {
+          setUser(response.json());
+          localStorage.setItem('user', response.json());
+          console.log(response.json());
+        })*/
         
-        console.log(user); //TODO: add fetch POST method to send user data to backend
+        console.log(JSON.stringify(userData)); //TODO: add fetch POST method to send user data to backend
         navigate('/home');
     }
 
   return (
     <div className="container">
       <div>
-        <div className="component-title-container">Login</div>
+        <div className="auth-title-container">Login</div>
       </div>
       <form onSubmit={sendLoginData}>
         <div name="email" className="input">
@@ -52,7 +69,7 @@ const Login = (props) => {
       <div className="login-signup-container">
         <div className="submit">
           <Link to="/sign-up">
-            <button
+            <button className="login-signup-button"
               onClick={() => {
                 props.updateLoginOrSignUp("SignUp");
               }}

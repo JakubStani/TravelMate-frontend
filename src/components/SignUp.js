@@ -1,81 +1,119 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./LoginSignup.css"
 import { Link, useNavigate } from "react-router-dom";
 
 
 const SignUp = (props) => {
     const navigate = useNavigate();
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setlastName] = useState('');
+    const [firstname, setFirstName] = useState('');
+    const [lastname, setlastName] = useState('');
     const [email, setEmail] = useState('');
-    const [password1, setPassword1] = useState('');
+    const [password, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');
 
     const sendSignUpData = (data) => {
         data.preventDefault();
-        const newUser = { firstName, lastName, email, password1};
+        const newUser = { firstname, lastname, email, password };
 
-        console.log(newUser); //TODO: add fetch POST method to send new user data to backend
+        /*
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "firstname": "test",
+            "lastname": "test",
+            "email": "test2@gmzil.com",
+            "password": "test"
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            mode: 'cors',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("https://travelmatebackend.azurewebsites.net/api/v1/auth/register", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+        */
+
+        fetch('https://travelmatebackend.azurewebsites.net/api/v1/auth/register', {
+          method: 'POST',
+          body: JSON.stringify(newUser),
+          headers: {
+            'Content-Type': 'application/json',
+            'Connection': 'keep-alive',
+          }
+        })
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+        //.then((response) => console.log(response.json()))
+
+        console.log(JSON.stringify(newUser)); //TODO: add fetch POST method to send new user data to backend
         navigate('/home');
     }
 
     return (
         <div className="container">
             <div>
-                <div className="component-title-container">Sign Up</div>
+                <div className="auth-title-container">Sign Up</div>
             </div>
 
             <form onSubmit={sendSignUpData}>
 
                 <div name="first_name" className="input">
-                <input 
-                    type="text"
-                    required 
-                    placeholder="First Name"
-                    value={firstName}
-                    onChange={(event) => setFirstName(event.target.value)}
+                    <input
+                        type="text"
+                        required
+                        placeholder="First Name"
+                        value={firstname}
+                        onChange={(event) => setFirstName(event.target.value)}
                     ></input>
                 </div>
 
                 <div name="last_name" className="input">
-                <input 
-                    type="text"
-                    required 
-                    placeholder="Last Name"
-                    value={lastName}
-                    onChange={(event) => setlastName(event.target.value)}
+                    <input
+                        type="text"
+                        required
+                        placeholder="Last Name"
+                        value={lastname}
+                        onChange={(event) => setlastName(event.target.value)}
                     ></input>
                 </div>
 
                 <div name="email" className="input">
-                    <input 
+                    <input
                         type="email"
-                        required 
+                        required
                         placeholder="Email"
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
-                     ></input>
+                    ></input>
                 </div>
 
                 <div name="password1" className="input">
-                    <input 
+                    <input
                         type="password"
-                        required 
+                        required
                         placeholder="Password"
-                        value={password1}
+                        value={password}
                         onChange={(event) => setPassword1(event.target.value)}
-                        ></input>
+                    ></input>
                 </div>
 
 
                 <div name="password2" className="input">
-                    <input 
+                    <input
                         type="password"
-                        required 
+                        required
                         placeholder="Repeat Password"
                         value={password2}
                         onChange={(event) => setPassword2(event.target.value)}
-                        ></input>
+                    ></input>
                 </div>
 
                 <div className="submit-container">
@@ -85,7 +123,7 @@ const SignUp = (props) => {
 
             <div className="login-signup-container">
                 <div className="submit">
-                    <Link to="/"><button onClick={() => {props.updateLoginOrSignUp('Login')}}>Login</button></Link>
+                    <Link to="/"><button onClick={() => { props.updateLoginOrSignUp('Login') }}>Login</button></Link>
                 </div>
             </div>
         </div>
