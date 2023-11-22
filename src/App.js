@@ -4,6 +4,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import ProfileScreen from './screens/ProfileScreen';
 
 function App() {
 
@@ -16,6 +17,13 @@ function App() {
     setLoginSignUp(choice);
   }
 
+  //storing SideBar's state
+  const [sideBarOpen, setSideBarOpen] = useState(false);
+
+  const toggleSideBar = () => {
+    setSideBarOpen(!sideBarOpen);
+}
+
   return (
     <Router>
       <div className="App">
@@ -24,7 +32,8 @@ function App() {
             <Routes>
               <Route exact path='/' element={<Login updateLoginOrSignUp={updateLoginOrSignUp} />} />
               <Route exact path='/sign-up' element={<SignUp updateLoginOrSignUp={updateLoginOrSignUp} />} />
-              <Route exact path='/home' element={<Home />} />
+              <Route exact path='/home' element={<Home sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>} />
+              <Route exact path='/profile' element={<ProfileScreen />}></Route>
             </Routes>
           </header>
         </div>
