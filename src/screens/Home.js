@@ -1,5 +1,6 @@
 import NavBar from "../shared/NavBar";
 import SideBar from "../shared/SideBar";
+import SharedPlan from "../components/SharedPlan";
 
 function Home(props) {
 
@@ -16,6 +17,7 @@ function Home(props) {
           <header className="App-header">
             <NavBar toggleSideBar={props.toggleSideBar}/>
             <h1>This is a home screen</h1>
+            <SharedPlan/>
           </header>
         </div>
       }
