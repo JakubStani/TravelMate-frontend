@@ -4,6 +4,9 @@ import NavBar from '../shared/NavBar';
 import './ProfileScreen.css';
 
 function ProfileScreen(props) {
+
+  document.title = `Profile`;
+
   return (
     <SideBar
       sideBarOpen={props.sideBarOpen}
