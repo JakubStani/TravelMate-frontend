@@ -7,8 +7,8 @@ const NavBar = (props) => {
         <div className="nav_container">
             <nav className="navbar">
                 <div className="routes">
-                    <Link>Logo</Link>
-                    <Link>Shared plans</Link>
+                    <Link to={'/home'}>Logo</Link>
+                    <Link to={'/home'}>Shared plans</Link>
                     <Link >Create plan</Link>
                     <Link onClick={()=> props.toggleSideBar()}>Profile Icon</Link>
                 </div>
