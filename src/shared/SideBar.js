@@ -10,8 +10,10 @@ function SideBar(props) {
     const sideBarContent = (
         <div>
             <p onClick={()=>navigate('/profile')}>Account</p>
-            <p>Logout</p>
+            <p>Friends</p>
+            <p>Travel history</p>
             <p>Settings</p>
+            <p>Logout</p>
             <p onClick={()=> props.toggleSideBar()}>X</p>
         </div>
     )
