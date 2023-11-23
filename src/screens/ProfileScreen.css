@@ -1,0 +1,35 @@
+.profile-title-container{
+    font-size: 60px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 20vh;
+    margin-top: 70px;
+}
+
+.profile-data-container{
+    background-color: white;
+    border-radius: 7px;
+    width: 90%;
+    color: grey;
+    font-size: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+.profile-specific-data-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.profile-action-container{
+    border-radius: 7px;
+    width: 90%;
+    color: white;
+    background-color: #8d00c4;
+    font-size: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
