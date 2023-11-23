@@ -11,9 +11,9 @@
 .shared-plan-data-container{
     background-color: white;
     border-radius: 7px;
-    width: 90%;
+    width: 50%;
     color: grey;
-    font-size: 25px;
+    font-size: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
 }
