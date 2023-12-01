@@ -8,6 +8,7 @@ const Login = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [user, setUser]= useState({})
+    const [userToken, setUserToken] = useState('')
 
     const sendLoginData = (data) => {
         data.preventDefault();
@@ -20,7 +21,12 @@ const Login = (props) => {
             'Content-Type': 'application/json'
           }
         }).then(response => response.text())
-        .then(result => console.log(result))
+        .then(result => {
+          const jsonResult = JSON.parse(result);
+          console.log(jsonResult);
+          setUserToken(jsonResult['access_token']);
+          localStorage.setItem("userToken", jsonResult['access_token']);
+        })
         .catch(error => console.log('error', error));
 
         /*.then((response) => {
