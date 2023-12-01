@@ -54,7 +54,7 @@ const SignUp = (props) => {
         //.then((response) => console.log(response.json()))
 
         console.log(JSON.stringify(newUser)); //TODO: add fetch POST method to send new user data to backend
-        navigate('/home');
+        navigate('/');
     }
 
     return (

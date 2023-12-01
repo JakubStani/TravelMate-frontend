@@ -21,7 +21,7 @@ const headers = {
 
   
   useEffect(() => {
-    /*fetch('https://travelmatebackend.azurewebsites.net/api/v1/trips/browse', {
+    fetch('https://travelmatebackend.azurewebsites.net/api/v1/trips/browse', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -37,18 +37,18 @@ const headers = {
           console.log("result2", jsonResult);
           setSharedPlansData(jsonResult);
         })
-        .catch(error => console.log('error', error));*/
+        .catch(error => console.log('error', error));
 
-          axios.get(endpoint, {headers})
-          .then(response => {
-            // Otrzymaj dane z odpowiedzi
-            console.log('Response:', response.data);
-            // Tutaj możesz przetworzyć otrzymane dane
-          })
-          .catch(error => {
-            // Obsługa błędu
-            console.error('Error:', error);
-          });
+          // axios.get(endpoint, {headers})
+          // .then(response => {
+          //   // Otrzymaj dane z odpowiedzi
+          //   console.log('Response:', response.data);
+          //   // Tutaj możesz przetworzyć otrzymane dane
+          // })
+          // .catch(error => {
+          //   // Obsługa błędu
+          //   console.error('Error:', error);
+          // });
   }, []);
 
 
