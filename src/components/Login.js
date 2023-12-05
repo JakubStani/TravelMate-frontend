@@ -26,6 +26,8 @@ const Login = (props) => {
           console.log(jsonResult);
           setUserToken(jsonResult['access_token']);
           localStorage.setItem("userToken", jsonResult['access_token']);
+          console.log(JSON.stringify(userData)); //TODO: add fetch POST method to send user data to backend
+          navigate('/home');
         })
         .catch(error => console.log('error', error));
 
@@ -35,8 +37,6 @@ const Login = (props) => {
           console.log(response.json());
         })*/
         
-        console.log(JSON.stringify(userData)); //TODO: add fetch POST method to send user data to backend
-        navigate('/home');
     }
 
   return (
