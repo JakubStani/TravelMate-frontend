@@ -7,6 +7,20 @@ import axios from 'axios';
 
 function Home(props) {
 
+  const tripsMockupData = [
+    {
+      "id": 1,
+      "userInfo": "Jakub S",
+      "userTotalTrips": 1,
+      "title": "Trzy korony w zimie",
+      "destination": "Trzy korony, Polska",
+      "startDate": "2023-12-20",
+      "endDate": "2023-12-20",
+      "estimatedPrice": "100",
+      "pointOfStart": "Wrocław, Polska"
+    }
+  ]
+
   const endpoint = 'https://travelmatebackend.azurewebsites.net/api/v1/trips/browse';
 
   // Nagłówki, które chcesz dodać do żądania
@@ -35,7 +49,8 @@ const headers = {
           console.log("result1", result);
           const jsonResult = JSON.parse(result);
           console.log("result2", jsonResult);
-          setSharedPlansData(jsonResult);
+          //setSharedPlansData(jsonResult);
+          setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
         })
         .catch(error => console.log('error', error));
 
@@ -62,7 +77,15 @@ const headers = {
           <header className="App-header">
             <NavBar toggleSideBar={props.toggleSideBar}/>
             <h1>This is a home screen</h1>
-            <SharedPlan/>
+            <SharedPlan
+              userData={sharedPlansData[0]['userInfo']}
+              title={sharedPlansData[0]['title']}
+              estimatedPrice={sharedPlansData[0]['estimatedPrice']}
+              startDate={sharedPlansData[0]['startDate']}
+              endDate={sharedPlansData[0]['endDate']}
+              destination={sharedPlansData[0]['destination']}
+            
+            />
           </header>
         </div>
       }

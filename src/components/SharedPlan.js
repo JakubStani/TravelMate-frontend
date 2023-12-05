@@ -1,30 +1,30 @@
 import React from 'react'
 import './SharedPlan.css'
 
-function SharedPlan() {
+function SharedPlan(props) {
   return (
         <div className='shared-plan-data-container'>
 
             <div className='shared-plan-top-container'>
                 <div className='shared-plan-user-data-container'>
-                    <p>user data</p>
+                    <p>{props.userData}</p>
                     <p>TravelMate logo?</p>
                 </div>
         
                 <div className='shared-plan-title-container'>
-                    <p>title</p>
+                    <p>{props.title}</p>
                 </div>
 
                 <div className='shared-plan-date-costs-data-container'>
-                    <p>cost</p>
-                    <p>start date - end date</p>
+                    <p>{props.estimatedPrice}</p>
+                    <p>{props.startDate} - {props.endDate}</p>
                 </div>
             </div>
 
             <div className='shared-plan-mid-container'>
                 <p>mid</p>
                 <div className='shared-plan-details-data-container'>
-                    <p>destination</p>
+                    <p>{props.destination}</p>
                     <p>test</p>
                     <p>number of people</p>
                     <p>test</p>
