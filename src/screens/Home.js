@@ -5,8 +5,11 @@ import { List } from "react-virtualized";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import './Home.css'
+import { useNavigate } from 'react-router-dom';
 
 function Home(props) {
+
+  const navigate = useNavigate();
 
   const tripsMockupData = [
     {
@@ -69,7 +72,7 @@ function Home(props) {
   }, []);
 
   const renderSharedTripPlan = ({index, key, style}) => (
-    <div key={key} style={{marginBlock: '100px'}}>
+    <div key={key} style={{marginBlock: '100px'}} onClick={() => showTripsDetails(sharedPlansData[index])}>
       <SharedPlan
                 userData={sharedPlansData[index]['userInfo']}
                 title={sharedPlansData[index]['title']}
@@ -82,7 +85,9 @@ function Home(props) {
     </div>
   );
 
-  
+  const showTripsDetails = (selectedTrip) => {
+    navigate('/trip-details', {state: selectedTrip});
+  };
 
   return (
     <SideBar
