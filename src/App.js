@@ -5,6 +5,7 @@ import SignUp from './components/SignUp';
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import ProfileScreen from './screens/ProfileScreen';
+import CreatePlan from './screens/CreatePlan';
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
               <Route exact path='/sign-up' element={<SignUp updateLoginOrSignUp={updateLoginOrSignUp} />} />
               <Route exact path='/home' element={<Home sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>} />
               <Route exact path='/profile' element={<ProfileScreen sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
+              <Route exact path='/create-plan' element={<CreatePlan sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
             </Routes>
           </header>
         </div>
