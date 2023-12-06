@@ -1,0 +1,5 @@
+
+
+  .VirtualizedList .ReactVirtualized__Grid::-webkit-scrollbar-track {
+    background-color: transparent; /* Ustaw kolor tła paska przewijania na przezroczysty */
+  }

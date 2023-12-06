@@ -4,6 +4,7 @@ import SharedPlan from "../components/SharedPlan";
 import { List } from "react-virtualized";
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import './Home.css'
 
 function Home(props) {
 
@@ -67,6 +68,20 @@ function Home(props) {
           // });
   }, []);
 
+  const renderSharedTripPlan = ({index, key, style}) => (
+    <div style={{marginBlock: '100px'}}>
+      <SharedPlan
+                userData={sharedPlansData[index]['userInfo']}
+                title={sharedPlansData[index]['title']}
+                estimatedPrice={sharedPlansData[index]['estimatedPrice']}
+                startDate={sharedPlansData[index]['startDate']}
+                endDate={sharedPlansData[index]['endDate']}
+                destination={sharedPlansData[index]['destination']}
+                key={key}
+              
+              />
+    </div>
+  )
 
   return (
     <SideBar
@@ -77,17 +92,17 @@ function Home(props) {
         <div className="App">
           <header className="App-header">
             <NavBar toggleSideBar={props.toggleSideBar}/>
-            <h1>This is a home screen</h1>
             {console.log("trips data 2 ", sharedPlansData)}
-            {sharedPlansData && sharedPlansData.map((item, index) =>{<SharedPlan
-              userData={sharedPlansData[index]['userInfo']}
-              title={sharedPlansData[index]['title']}
-              estimatedPrice={sharedPlansData[index]['estimatedPrice']}
-              startDate={sharedPlansData[index]['startDate']}
-              endDate={sharedPlansData[index]['endDate']}
-              destination={sharedPlansData[index]['destination']}
+            {sharedPlansData && 
+              <List
+                width={800}
+                height={700}
+                rowRenderer={renderSharedTripPlan}
+                rowCount={sharedPlansData.length}
+                rowHeight={650}
+                
             
-            />})
+              />
             }
           </header>
         </div>

@@ -3,7 +3,7 @@ import './SharedPlan.css'
 
 function SharedPlan(props) {
   return (
-        <div className='shared-plan-data-container'>
+        <div key={props.key} className='shared-plan-data-container'>
 
             <div className='shared-plan-top-container'>
                 <div className='shared-plan-user-data-container'>
