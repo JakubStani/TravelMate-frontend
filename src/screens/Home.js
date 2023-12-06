@@ -19,16 +19,16 @@ function Home(props) {
       "estimatedPrice": "100",
       "pointOfStart": "Wrocław, Polska"
     }
-  ]
+  ];
 
   const endpoint = 'https://travelmatebackend.azurewebsites.net/api/v1/trips/browse';
 
   // Nagłówki, które chcesz dodać do żądania
-const headers = {
-  'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
-};
+  const headers = {
+    'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
+  };
 
-  const [sharedPlansData, setSharedPlansData]= useState([]);
+  const [sharedPlansData, setSharedPlansData]= useState();
 
   //changing site's title
   document.title = `TravelMate - Home`;
@@ -49,8 +49,9 @@ const headers = {
           console.log("result1", result);
           const jsonResult = JSON.parse(result);
           console.log("result2", jsonResult);
-          //setSharedPlansData(jsonResult);
-          setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
+          setSharedPlansData(jsonResult);
+          console.log("trips data 1 ", tripsMockupData);
+          //setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
         })
         .catch(error => console.log('error', error));
 
@@ -77,15 +78,17 @@ const headers = {
           <header className="App-header">
             <NavBar toggleSideBar={props.toggleSideBar}/>
             <h1>This is a home screen</h1>
-            <SharedPlan
-              userData={sharedPlansData[0]['userInfo']}
-              title={sharedPlansData[0]['title']}
-              estimatedPrice={sharedPlansData[0]['estimatedPrice']}
-              startDate={sharedPlansData[0]['startDate']}
-              endDate={sharedPlansData[0]['endDate']}
-              destination={sharedPlansData[0]['destination']}
+            {console.log("trips data 2 ", sharedPlansData)}
+            {sharedPlansData && sharedPlansData.map((item, index) =>{<SharedPlan
+              userData={sharedPlansData[index]['userInfo']}
+              title={sharedPlansData[index]['title']}
+              estimatedPrice={sharedPlansData[index]['estimatedPrice']}
+              startDate={sharedPlansData[index]['startDate']}
+              endDate={sharedPlansData[index]['endDate']}
+              destination={sharedPlansData[index]['destination']}
             
-            />
+            />})
+            }
           </header>
         </div>
       }
