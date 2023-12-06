@@ -69,7 +69,7 @@ function Home(props) {
   }, []);
 
   const renderSharedTripPlan = ({index, key, style}) => (
-    <div style={{marginBlock: '100px'}}>
+    <div key={key} style={{marginBlock: '100px'}}>
       <SharedPlan
                 userData={sharedPlansData[index]['userInfo']}
                 title={sharedPlansData[index]['title']}
@@ -77,11 +77,12 @@ function Home(props) {
                 startDate={sharedPlansData[index]['startDate']}
                 endDate={sharedPlansData[index]['endDate']}
                 destination={sharedPlansData[index]['destination']}
-                key={key}
-              
+                
               />
     </div>
-  )
+  );
+
+  
 
   return (
     <SideBar

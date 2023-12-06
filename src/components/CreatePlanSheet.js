@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 function CreatePlanSheet() {
-
+  
     const navigate = useNavigate();
 
     // const dmyToYmdDateFormat = (inputDate) => {
@@ -69,7 +69,8 @@ function CreatePlanSheet() {
     const [standard, setStandard] = useState('')
     const [hotelDescription, setHotelDescription] = useState('')
 
-    const createNewTrip = () => {
+    const createNewTrip = (event) => {
+      event.preventDefault();
 
         const tripData = {
             "newTrip": {
@@ -104,7 +105,7 @@ function CreatePlanSheet() {
         }).then(response => response.text())
         .then(result => {
           console.log('server answer for trip creation: ', result);
-          //navigate('/home');
+          navigate('/home');
         })
         .catch(error => console.log('error', error));
 
@@ -286,7 +287,7 @@ function CreatePlanSheet() {
       </form>
 
       <div className="submit-container">
-          <button onClick={() => createNewTrip()} className="submit-button">Submit</button>
+          <button className="submit-button">Submit</button>
         </div>
 
 

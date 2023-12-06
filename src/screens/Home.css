@@ -1,5 +1,16 @@
 
-
+.VirtualizedList .ReactVirtualized__Grid::-webkit-scrollbar {
+    width: 8px; /* Domyślna szerokość paska przewijania */
+  }
+  
+  .VirtualizedList .ReactVirtualized__Grid::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Ustaw kolor przycisku paska przewijania na przezroczysty */
+  }
+  
   .VirtualizedList .ReactVirtualized__Grid::-webkit-scrollbar-track {
     background-color: transparent; /* Ustaw kolor tła paska przewijania na przezroczysty */
+  }
+  
+  .VirtualizedList .ReactVirtualized__Grid:hover::-webkit-scrollbar-thumb {
+    background-color: #888; /* Po najechaniu myszą, pokaż pasek przewijania */
   }
