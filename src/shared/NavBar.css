@@ -1,12 +1,11 @@
 .nav_container {
-    width: 100%;
-    position: fixed;
-    top: 0;
+    padding-inline: 10px;
 }
 
 .navbar {
     background-color: blueviolet;
     padding: 20px;
+    width: 100%;
     flex-direction: row;
     justify-content: space-between;
 }
@@ -16,6 +15,6 @@
     gap: 20px;
 }
 
-.routes a {
+a {
     text-decoration: none;
 }
