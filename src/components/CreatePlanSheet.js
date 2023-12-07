@@ -286,10 +286,6 @@ function CreatePlanSheet() {
         </div>
       </form>
 
-      <div className="submit-container">
-          <button className="submit-button">Submit</button>
-        </div>
-
 
 
     </div>
