@@ -2,8 +2,11 @@ import React from 'react'
 import SideBar from '../shared/SideBar';
 import NavBar from '../shared/NavBar';
 import './ProfileScreen.css';
+import { useNavigate } from 'react-router-dom';
 
 function ProfileScreen(props) {
+
+  const navigate = useNavigate();
 
   document.title = `Profile`;
 
@@ -37,7 +40,9 @@ function ProfileScreen(props) {
                 </div>
             </div>
 
-            <div className='profile-action-container'>
+            <div className='profile-action-container'
+              onClick={() => navigate('/change-password')}
+              >
                 <div>
                     <p>Change password</p>
                 </div>

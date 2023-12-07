@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import ProfileScreen from './screens/ProfileScreen';
 import CreatePlan from './screens/CreatePlan';
 import TripDetails from './screens/TripDetails';
+import ChangePassword from './screens/ChangePassword';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
 }
 
   return (
+    
     <Router>
       <div className="App">
         <div className='content'>
@@ -38,6 +40,7 @@ function App() {
               <Route exact path='/profile' element={<ProfileScreen sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
               <Route exact path='/create-plan' element={<CreatePlan sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
               <Route exact path='/trip-details' element={<TripDetails sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
+              <Route exact path='/change-password' element={<ChangePassword sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
             </Routes>
           </header>
         </div>
