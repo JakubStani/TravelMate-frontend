@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./LoginSignup.css"
 import { Link, useNavigate } from "react-router-dom";
+import TMlogo from "../icons/TMlogo";
 
 
 const SignUp = (props) => {
@@ -63,10 +64,15 @@ const SignUp = (props) => {
                 <div className="auth-title-container">Sign Up</div>
             </div>
 
+            <div>
+                <TMlogo />
+            </div>
+
             <form onSubmit={sendSignUpData}>
 
-                <div name="first_name" className="input">
+                <div name="first_name" className="input-div">
                     <input
+                        className="input"
                         type="text"
                         required
                         placeholder="First Name"
@@ -75,8 +81,9 @@ const SignUp = (props) => {
                     ></input>
                 </div>
 
-                <div name="last_name" className="input">
+                <div name="last_name" className="input-div">
                     <input
+                        className="input"
                         type="text"
                         required
                         placeholder="Last Name"
@@ -85,8 +92,9 @@ const SignUp = (props) => {
                     ></input>
                 </div>
 
-                <div name="email" className="input">
+                <div name="email" className="input-div">
                     <input
+                        className="input"
                         type="email"
                         required
                         placeholder="Email"
@@ -95,8 +103,9 @@ const SignUp = (props) => {
                     ></input>
                 </div>
 
-                <div name="password1" className="input">
+                <div name="password1" className="input-div">
                     <input
+                        className="input"
                         type="password"
                         required
                         placeholder="Password"
@@ -106,8 +115,9 @@ const SignUp = (props) => {
                 </div>
 
 
-                <div name="password2" className="input">
+                <div name="password2" className="input-div">
                     <input
+                        className="input"
                         type="password"
                         required
                         placeholder="Repeat Password"
@@ -123,7 +133,7 @@ const SignUp = (props) => {
 
             <div className="login-signup-container">
                 <div className="submit">
-                    <Link to="/"><button onClick={() => { props.updateLoginOrSignUp('Login') }}>Login</button></Link>
+                    <Link to="/"><button className="login-signup-button" onClick={() => { props.updateLoginOrSignUp('Login') }}>Login</button></Link>
                 </div>
             </div>
         </div>

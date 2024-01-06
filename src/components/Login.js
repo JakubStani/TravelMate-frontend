@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./LoginSignup.css";
 import { Link, useNavigate } from "react-router-dom";
+import TMlogo from "../icons/TMlogo";
 
 
 const Login = (props) => {
@@ -44,9 +45,13 @@ const Login = (props) => {
       <div>
         <div className="auth-title-container">Login</div>
       </div>
+      <div>
+        <TMlogo />
+      </div>
       <form onSubmit={sendLoginData}>
-        <div name="email" className="input">
+        <div name="email" className="input-div">
           <input 
+            className="input"
             type="email" 
             required
             placeholder="Email"
@@ -55,8 +60,9 @@ const Login = (props) => {
             ></input>
         </div>
 
-        <div name="password1" className="input">
+        <div name="password1" className="input-div">
           <input 
+            className="input"
             type="password" 
             required
             placeholder="Password"
@@ -70,7 +76,7 @@ const Login = (props) => {
         </div>
       </form>
 
-      <div className="forgot-password">Forgot password</div>
+      <div className="forgot-password">Forgot password?</div>
 
       <div className="login-signup-container">
         <div className="submit">
