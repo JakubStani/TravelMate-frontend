@@ -12,17 +12,17 @@ function CreatePlan(props) {
       setSideBarOpen={props.setSideBarOpen}
       toggleSideBar={props.toggleSideBar}
       content={
-        <div className="App">
-          <header className="App-header">
+        <div>
+          <header>
             <NavBar toggleSideBar={props.toggleSideBar}/>
             <div className='main-container'>
-          <div>
-              <h1>Create Plan</h1>
-          </div>
-          <div className='create-plan-sheet-container'>
-              <CreatePlanSheet />
-          </div>
-        </div>
+              <div className='header-container'>
+                  <h1>Create Plan</h1>
+              </div>
+              <div className='create-plan-sheet-container'>
+                  <CreatePlanSheet />
+              </div>
+            </div>
           </header>
         </div>
       }
