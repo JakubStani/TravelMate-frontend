@@ -1,6 +1,12 @@
 .main-container {
     width: 80%;
+    display: flex;
+    flex-direction: column;
 }
+
+.header-container {
+    margin-bottom: 20px;
+  }
 
 .create-plan-sheet-container {
     width: 100%;
