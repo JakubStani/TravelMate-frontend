@@ -13,7 +13,7 @@ function SideBar(props) {
                 navigate('/profile');
                 props.toggleSideBar();
                 }}>Account</p>
-            <p>Friends</p>
+            <a href="/friends">Friends</a>
             <p>Travel history</p>
             <p>Settings</p>
             <p>Logout</p>

@@ -114,7 +114,7 @@ function Home(props) {
       setSideBarOpen={props.setSideBarOpen}
       toggleSideBar={props.toggleSideBar}
       content={
-        <div className="App">
+        <div>
           <header className="App-header">
             <NavBar toggleSideBar={props.toggleSideBar}/>
             {console.log("trips data 2 ", sharedPlansData)}

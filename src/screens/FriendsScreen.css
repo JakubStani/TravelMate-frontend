@@ -1,0 +1,43 @@
+.friends-cards-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.friends-title-container{
+    font-size: 60px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    height: 20vh;
+    margin-top: 70px;
+}
+
+.friends-card-data-container{
+    background-color: white;
+    border-radius: 7px;
+    color: grey;
+    font-size: 20px;
+    min-height: 50vh;
+}
+
+.friend-section-container {
+    width: 40%;
+    margin-bottom: 60px;
+}
+
+.friend-block-container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    
+}
+
+.profile-action-container{
+    border-radius: 7px;
+    width: 90%;
+    color: white;
+    background-color: #8d00c4;
+    font-size: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
