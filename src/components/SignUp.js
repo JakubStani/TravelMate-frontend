@@ -11,35 +11,22 @@ const SignUp = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');
+    const [passwordError, setPasswordError] = useState("");
 
     const sendSignUpData = (data) => {
         data.preventDefault();
+        if (password !== password2) {
+            setPasswordError("Passwords do not match");
+            return;
+        }
+
+        if (password.length < 8) {
+            setPasswordError("Password must be at least 8 characters long");
+            return;
+        }
+
+        setPasswordError("");
         const newUser = { firstname, lastname, email, password };
-
-        /*
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        var raw = JSON.stringify({
-            "firstname": "test",
-            "lastname": "test",
-            "email": "test2@gmzil.com",
-            "password": "test"
-        });
-
-        var requestOptions = {
-            method: 'POST',
-            mode: 'cors',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-
-        fetch("https://travelmatebackend.azurewebsites.net/api/v1/auth/register", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
-        */
 
         fetch('https://travelmatebackend.azurewebsites.net/api/v1/auth/register', {
           method: 'POST',
@@ -125,6 +112,10 @@ const SignUp = (props) => {
                         onChange={(event) => setPassword2(event.target.value)}
                     ></input>
                 </div>
+
+                {passwordError && (
+                    <div className="error-message">{passwordError}</div>
+                )}
 
                 <div className="submit-container">
                     <button className="submit-button">Create an account</button>

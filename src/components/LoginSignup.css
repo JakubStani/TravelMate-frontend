@@ -65,3 +65,9 @@
     font-weight: bold;
     color: #f5bf42;
 }
+
+.error-message {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff0000;
+}
