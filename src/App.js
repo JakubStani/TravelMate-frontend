@@ -9,6 +9,8 @@ import CreatePlan from './screens/CreatePlan';
 import TripDetails from './screens/TripDetails';
 import ChangePassword from './screens/ChangePassword';
 import FriendsScreen from './screens/FriendsScreen';
+import ChangePasswordInfo from './screens/ChangePasswordInfo';
+import ForgotPassword from './screens/ForgotPassword';
 
 function App() {
 
@@ -26,7 +28,24 @@ function App() {
 
   const toggleSideBar = () => {
     setSideBarOpen(!sideBarOpen);
-}
+  }
+
+const sendChangePasswordRequest = (email) => {
+  fetch(`https://travelmatebackend.azurewebsites.net/api/v1/auth/resetPassword?email=${email}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+
+        },
+        redirect: 'follow',
+        //mode: 'no-cors'
+      }).then(response => response.text())
+      .then(result => {
+        console.log('test')
+      })
+      .catch(error => console.log('error', error));
+};
 
   return (
     
@@ -38,11 +57,13 @@ function App() {
               <Route exact path='/' element={<Login updateLoginOrSignUp={updateLoginOrSignUp} />} />
               <Route exact path='/sign-up' element={<SignUp updateLoginOrSignUp={updateLoginOrSignUp} />} />
               <Route exact path='/home' element={<Home sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>} />
-              <Route exact path='/profile' element={<ProfileScreen sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
+              <Route exact path='/profile' element={<ProfileScreen sendChangePasswordRequest={sendChangePasswordRequest} sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
               <Route exact path='/create-plan' element={<CreatePlan sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
               <Route exact path='/trip-details' element={<TripDetails sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
-              <Route exact path='/change-password' element={<ChangePassword sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
+              <Route exact path='/change-password/:token' element={<ChangePassword sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
+              <Route exact path='/change-password-info' element={<ChangePasswordInfo />} />
               <Route exact path='/friends' element={<FriendsScreen sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
+              <Route exact path='/forgot-password' element={<ForgotPassword sendChangePasswordRequest={sendChangePasswordRequest}/>} />
             </Routes>
           </header>
         </div>

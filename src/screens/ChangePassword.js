@@ -2,17 +2,43 @@ import React, { useState } from 'react'
 import SideBar from '../shared/SideBar'
 import NavBar from '../shared/NavBar'
 import './ChangePassword.css'
+import { useNavigate, useParams } from 'react-router-dom'
 
 function ChangePassword(props) {
 
-    const [currentPassword, setCurrentPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmedNewPassword, setConfirmedNewPassword] = useState('');
+  const navigate=useNavigate();
 
-    const submitPasswordChange = (event) =>{
-        event.preventDefault();
-        console.log('new password ')
-    }
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmationPassword, setConfirmationPassword] = useState('');
+
+  const {token} = useParams();
+
+  const submitPasswordChange = (event) =>{
+      event.preventDefault();
+      const newPasswordData = {
+          "currentPassword": currentPassword,
+          "newPassword": newPassword,
+          "confirmationPassword": confirmationPassword
+      };
+
+      fetch(`https://travelmatebackend.azurewebsites.net/api/v1/auth/resetPassword?token=${token}`, {
+        method: 'PATCH',
+        body: JSON.stringify(newPasswordData),
+        headers: {
+          'Content-Type': 'application/json',
+          //'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+
+        },
+        redirect: 'follow',
+        //mode: 'no-cors'
+      }).then(response => response.text())
+      .then(result => {
+        console.log("result1", result);
+        navigate('/profile');
+      })
+      .catch(error => console.log('error', error));
+  }
 
   return (
     <SideBar
@@ -53,8 +79,8 @@ function ChangePassword(props) {
                             type='text' 
                             required
                             placeholder="Confirme new password"
-                            value={confirmedNewPassword}
-                            onChange={(value) => setConfirmedNewPassword(value.target.value)}
+                            value={confirmationPassword}
+                            onChange={(value) => setConfirmationPassword(value.target.value)}
                             ></input>
                         </div>
 
