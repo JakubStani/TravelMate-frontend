@@ -24,7 +24,7 @@ function ChangePassword(props) {
 
       fetch(`https://travelmatebackend.azurewebsites.net/api/v1/auth/resetPassword?token=${token}`, {
         method: 'PATCH',
-        body: JSON.stringify(newPasswordData),
+        body: JSON.stringify({newPassword: newPassword}),
         headers: {
           'Content-Type': 'application/json',
           //'Authorization': `Bearer ${localStorage.getItem('userToken')}`
@@ -40,6 +40,7 @@ function ChangePassword(props) {
       .catch(error => console.log('error', error));
   }
 
+  //TODO: check if user is logged in or not and adjust view to it
   return (
     <SideBar
       sideBarOpen={props.sideBarOpen}
@@ -47,7 +48,7 @@ function ChangePassword(props) {
       toggleSideBar={props.toggleSideBar}
       content={
         <div className="App">
-            <header className="App-header">
+            <header>
                 <NavBar toggleSideBar={props.toggleSideBar}/>
 
                 <div className='change-password-title-container'>Change password</div>
