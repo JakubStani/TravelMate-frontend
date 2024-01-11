@@ -71,7 +71,7 @@ function TripDetailsContainer(props) {
                 </div>
             </div>
             <div className='profile-action-container'>
-                <div>
+                <div onClick={()=> props.signUpForTrip()}>
                     <p>Sign up for this trip</p>
                 </div>
             </div>
