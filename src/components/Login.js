@@ -76,20 +76,18 @@ const Login = (props) => {
         </div>
       </form>
 
-      <div className="forgot-password">Forgot password?</div>
+      <div className="forgot-password" onClick={() => navigate('/forgot-password')}>Forgot password?</div>
 
       <div className="login-signup-container">
-        <div className="submit">
-          <Link to="/sign-up">
-            <button className="login-signup-button"
-              onClick={() => {
-                props.updateLoginOrSignUp("SignUp");
-              }}
-            >
-              Sign Up
-            </button>
-          </Link>
-        </div>
+        <Link to="/sign-up">
+          <button className="login-signup-button"
+            onClick={() => {
+              props.updateLoginOrSignUp("SignUp");
+            }}
+          >
+            Sign Up
+          </button>
+        </Link>
       </div>
     </div>
   );
