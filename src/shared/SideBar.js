@@ -7,6 +7,11 @@ function SideBar(props) {
 
     const navigate = useNavigate();
 
+    const logout = () => {
+        localStorage.clear();
+        navigate('/');
+    };
+
     const sideBarContent = (
         <div>
             <p onClick={()=>{
@@ -16,7 +21,7 @@ function SideBar(props) {
             <a href="/friends">Friends</a>
             <p>Travel history</p>
             <p>Settings</p>
-            <p>Logout</p>
+            <p onClick={() => logout()}>Logout</p>
             <p onClick={()=> props.toggleSideBar()}>X</p>
         </div>
     )
