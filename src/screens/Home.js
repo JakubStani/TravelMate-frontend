@@ -37,9 +37,11 @@ function Home(props) {
   //changing site's title
   document.title = `TravelMate - Home`;
 
+  const [sharedPlansKindToFetch, setSharedPlansKindToFetch] = useState('browse')
+
   
   useEffect(() => {
-    fetch('https://travelmatebackend.azurewebsites.net/api/v1/trips/browse', {
+    fetch(`https://travelmatebackend.azurewebsites.net/api/v1/trips/${sharedPlansKindToFetch}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -69,7 +71,7 @@ function Home(props) {
           //   // Obsługa błędu
           //   console.error('Error:', error);
           // });
-  }, []);
+  }, [sharedPlansKindToFetch]);
 
   const renderSharedTripPlan = ({index, key, style}) => (
     <div key={key} style={{marginBlock: '100px'}} onClick={() => showTripsDetails(sharedPlansData[index]['id'])}>
@@ -115,8 +117,18 @@ function Home(props) {
       toggleSideBar={props.toggleSideBar}
       content={
         <div>
-          <header className="App-header">
-            <NavBar toggleSideBar={props.toggleSideBar}/>
+          <NavBar toggleSideBar={props.toggleSideBar}/>
+          <div className='shared-plans-kinds'>
+            <div onClick={()=>setSharedPlansKindToFetch('browse')}>All</div>
+            <div onClick={()=>setSharedPlansKindToFetch('browse')}>Observed</div>
+            <div onClick={()=>setSharedPlansKindToFetch('signed-up')}>Signed Up</div>
+            <div onClick={()=>setSharedPlansKindToFetch('browse')}>My plans</div>
+          </div>
+          <div className="content-container">
+            <div className="observed">
+              <h3>Observed</h3>
+            </div>
+            <div className="infinite-scroll-list">
             {console.log("trips data 2 ", sharedPlansData)}
             {sharedPlansData && 
               <List
@@ -129,7 +141,11 @@ function Home(props) {
             
               />
             }
-          </header>
+            </div>
+            <div className="search-to-observe">
+              <h3>search to</h3>
+            </div>
+          </div>
         </div>
       }
     />

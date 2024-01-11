@@ -14,3 +14,27 @@
   .VirtualizedList .ReactVirtualized__Grid:hover::-webkit-scrollbar-thumb {
     background-color: #888; /* Po najechaniu myszą, pokaż pasek przewijania */
   }
+
+  .content-container {
+    display: flex;
+    grid-template-columns: 1fr, 2fr, 1fr;
+    justify-content: space-around;
+  }
+
+
+.infinite-scroll-list {
+  grid-column: 2/2;
+}
+
+.observed {
+  grid-column: 1 /1;
+}
+
+.search-to-observe {
+  grid-column: 3 /3;
+}
+
+.shared-plans-kinds {
+  display:flex;
+  justify-content: space-around;
+}
