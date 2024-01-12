@@ -36,7 +36,7 @@ function ChangePassword(props) {
       .then(result => {
         console.log("result1", result);
         localStorage.clear();
-        navigate('/login');
+        navigate('/');
       })
       .catch(error => console.log('error', error));
   }
