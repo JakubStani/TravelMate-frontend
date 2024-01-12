@@ -23,7 +23,7 @@ function ChangePassword(props) {
       };
 
       fetch(`https://travelmatebackend.azurewebsites.net/api/v1/auth/resetPassword?token=${token}`, {
-        method: 'PATCH',
+        method: 'POST',
         body: JSON.stringify({newPassword: newPassword}),
         headers: {
           'Content-Type': 'application/json',
@@ -35,7 +35,8 @@ function ChangePassword(props) {
       }).then(response => response.text())
       .then(result => {
         console.log("result1", result);
-        navigate('/profile');
+        localStorage.clear();
+        navigate('/login');
       })
       .catch(error => console.log('error', error));
   }
@@ -55,16 +56,6 @@ function ChangePassword(props) {
 
                 <div className='shared-plan-data-container'>
                     <form onSubmit={submitPasswordChange}>
-                        <div name="currentPassword" className="input">
-                        <input 
-                            type='text' 
-                            required
-                            placeholder="Current password"
-                            value={currentPassword}
-                            onChange={(value) => setCurrentPassword(value.target.value)}
-                            ></input>
-                        </div>
-
                         <div name="newPassword" className="input">
                         <input 
                             type="text" 
