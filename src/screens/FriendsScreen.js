@@ -142,6 +142,28 @@ function FriendsScreen(props) {
         .catch(error => console.log('error', error));
     }
 
+    const follow=(userId)=> {
+        fetch(`https://travelmatebackend.azurewebsites.net/api/v1/users/follow/${userId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+
+          },
+          redirect: 'follow',
+          //mode: 'no-cors'
+        }).then(response => response.text())
+        .then(result => {
+          console.log("result1", result);
+          const jsonResult = JSON.parse(result);
+          console.log("result2", jsonResult);
+          setUsersData(jsonResult);
+          //console.log("trips data 1 ", tripsMockupData);
+          //setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
+        })
+        .catch(error => console.log('error', error));
+    }
+
     const renderUser = ({index, key, style}) => {
 
         const customStyle = {
@@ -164,18 +186,11 @@ function FriendsScreen(props) {
                 </div>
             </div>
             <div>
-                <button>observe</button>
+                <button onClick={()=> follow(usersData[index]["id"])}>observe</button>
             </div>
         </div>
         );
     };
-
-    const follow=() => {
-
-        
-
-    }
-
 
   return (
 

@@ -15,7 +15,7 @@ function ForgotPassword(props) {
       <div>
         <TMlogo />
       </div>
-      <form onSubmit={props.sendChangePasswordRequest(email)}>
+      <div>
         <div name="email" className="input-div">
           <input 
             className="input"
@@ -28,9 +28,15 @@ function ForgotPassword(props) {
         </div>
 
         <div className="submit-container">
-          <button className="submit-button">Send email</button>
+          <button className="submit-button"
+            onClick={() => {
+                props.sendChangePasswordRequest(email);
+                navigate('/change-password-info');
+            }}
+            >
+                Send email</button>
         </div>
-      </form>
+      </div>
 
       <div className="forgot-password" onClick={() => navigate('/forgot-password')}>Forgot password?</div>
 
