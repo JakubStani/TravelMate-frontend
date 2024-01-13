@@ -30,8 +30,13 @@
   grid-column: 1 /1;
 }
 
-.search-to-observe {
+.right-side-column {
   grid-column: 3 /3;
+}
+
+.search-to-follow {
+  display: flex;
+  justify-content: center;
 }
 
 .shared-plans-kinds {

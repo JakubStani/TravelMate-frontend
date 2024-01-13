@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import './Home.css'
 import { useNavigate } from 'react-router-dom';
+import SearchAndList from "../components/SearchAndList";
 
 function Home(props) {
 
@@ -110,6 +111,87 @@ function Home(props) {
         .catch(error => console.log('error', error));
   };
 
+  //render items in search and list sections
+  const renderUser = ({index, key, style}) => {
+
+    const customStyle = {
+        display: "grid",
+        gridTemplateColumns: "repeat(2, 1fr)",
+        borderRadius: "7px",
+        color: "white",
+        backgroundColor: "#8d00c4",
+        ...style
+    };
+
+    return (
+        <div key={key} style={customStyle}>
+        <div>
+            <div>
+                {usersData[index]["firstName"]}
+            </div>
+            <div>
+                {usersData[index]["email"]}
+            </div>
+        </div>
+        <div>
+            <button onClick={()=> follow(usersData[index]["id"])}>observe</button>
+        </div>
+    </div>
+    );
+  };
+  //****************************************
+
+  //user data
+
+  const [searchedUser, setSearchedUser] = useState("");
+  const [usersData, setUsersData] = useState([]);
+
+  const getUserData = () => {
+    console.log("get userdata");
+    fetch(`https://travelmatebackend.azurewebsites.net/api/v1/users/search?pattern=${searchedUser}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+
+      },
+      redirect: 'follow',
+    }).then(response => response.text())
+    .then(result => {
+      console.log("result1", result);
+      const jsonResult = JSON.parse(result);
+      console.log("result2", jsonResult);
+      setUsersData(jsonResult);
+    })
+    .catch(error => console.log('error', error));
+};
+  //*********
+
+  //actions on user
+
+  const follow=(userId)=> {
+    fetch(`https://travelmatebackend.azurewebsites.net/api/v1/users/follow/${userId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+
+      },
+      redirect: 'follow',
+      //mode: 'no-cors'
+    }).then(response => response.text())
+    .then(result => {
+      console.log("result1", result);
+      const jsonResult = JSON.parse(result);
+      console.log("result2", jsonResult);
+      setUsersData(jsonResult);
+      //console.log("trips data 1 ", tripsMockupData);
+      //setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
+    })
+    .catch(error => console.log('error', error));
+  };
+  //***************
+
   return (
     <SideBar
       sideBarOpen={props.sideBarOpen}
@@ -126,7 +208,7 @@ function Home(props) {
           </div>
           <div className="content-container">
             <div className="observed">
-              <h3>Observed</h3>
+              <h3>Followed</h3>
             </div>
             <div className="infinite-scroll-list">
             {console.log("trips data 2 ", sharedPlansData)}
@@ -142,8 +224,17 @@ function Home(props) {
               />
             }
             </div>
-            <div className="search-to-observe">
-              <h3>search to</h3>
+            <div className="right-side-column">
+              <h3>search to follow</h3>
+              <div className="search-to-follow">
+                <SearchAndList 
+                  getData={getUserData}
+                  setSearchedUser={setSearchedUser}
+                  searchedUser={searchedUser}
+                  usersData={usersData}
+                  renderUser={renderUser}
+                  />
+                </div>
             </div>
           </div>
         </div>
