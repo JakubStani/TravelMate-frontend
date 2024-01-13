@@ -33,7 +33,7 @@ function Home(props) {
     'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
   };
 
-  const [sharedPlansData, setSharedPlansData]= useState();
+  const [sharedPlansData, setSharedPlansData]= useState([]);
 
   //changing site's title
   document.title = `TravelMate - Home`;
@@ -212,7 +212,7 @@ function Home(props) {
             </div>
             <div className="infinite-scroll-list">
             {console.log("trips data 2 ", sharedPlansData)}
-            {sharedPlansData && 
+            {sharedPlansData.length>0 ? 
               <List
                 width={800}
                 height={700}
@@ -222,6 +222,8 @@ function Home(props) {
                 
             
               />
+              :
+              <h1>No plans have been shared yet</h1>
             }
             </div>
             <div className="right-side-column">
