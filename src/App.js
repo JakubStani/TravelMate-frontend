@@ -35,8 +35,6 @@ const sendChangePasswordRequest = (email) => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
-
         },
         redirect: 'follow',
         //mode: 'no-cors'
