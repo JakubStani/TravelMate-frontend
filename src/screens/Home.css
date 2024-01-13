@@ -17,13 +17,14 @@
 
   .content-container {
     display: flex;
-    grid-template-columns: 1fr, 2fr, 1fr;
+    grid-template-columns: 25% 50% 25%;
     justify-content: space-around;
   }
 
 
 .infinite-scroll-list {
   grid-column: 2/2;
+  text-align: center;
 }
 
 .observed {

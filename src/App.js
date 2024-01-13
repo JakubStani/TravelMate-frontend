@@ -40,7 +40,7 @@ const sendChangePasswordRequest = (email) => {
         //mode: 'no-cors'
       }).then(response => response.text())
       .then(result => {
-        console.log('test')
+        console.log('test', result);
       })
       .catch(error => console.log('error', error));
 };

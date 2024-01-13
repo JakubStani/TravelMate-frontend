@@ -31,6 +31,7 @@ function ForgotPassword(props) {
           <button className="submit-button"
             onClick={() => {
                 props.sendChangePasswordRequest(email);
+                //TODO: check if email was found or not
                 navigate('/change-password-info');
             }}
             >

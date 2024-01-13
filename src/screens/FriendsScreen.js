@@ -140,7 +140,7 @@ function FriendsScreen(props) {
           //setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
         })
         .catch(error => console.log('error', error));
-    }
+    };
 
     const follow=(userId)=> {
         fetch(`https://travelmatebackend.azurewebsites.net/api/v1/users/follow/${userId}`, {
@@ -162,7 +162,7 @@ function FriendsScreen(props) {
           //setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
         })
         .catch(error => console.log('error', error));
-    }
+    };
 
     const renderUser = ({index, key, style}) => {
 
@@ -212,17 +212,17 @@ function FriendsScreen(props) {
                     <div className='friends-card-data-container'>
                         <div>
                             <SearchBar 
-                                search={(event)=> (event.key ==="Enter"? filterFriendData(): null)}
-                                whenTextChanges={(e)=> {setSearchedFriend(e.target.value);}}
-                                searchedFriend={searchedFriend}
+                                search={(event)=> (event.key ==="Enter"? filterFriendData(): null)} //? getData():
+                                whenTextChanges={(e)=> {setSearchedFriend(e.target.value);}} //? setSearchedFriend or setSearchedUser
+                                searchedFriend={searchedFriend} //searchedFriend or searchedUser
                                 />
                             <div>
                                 <List
                                     width={window.innerWidth*0.35}
                                     height={window.innerHeight*0.4}
-                                    rowCount={dynamicData.length}
+                                    rowCount={dynamicData.length} //dynamicData or usersData
                                     rowHeight={70}
-                                    rowRenderer={renderFriend}
+                                    rowRenderer={renderFriend} //renderFriend or renderUser
                                     />
                             </div>
                         </div>
