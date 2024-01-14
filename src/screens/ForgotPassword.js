@@ -7,6 +7,8 @@ function ForgotPassword(props) {
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
+    const [isEmailInForgPaswNotFound, setIsEmailInForgPaswNotFound] = useState(false);
+
   return (
     <div className="container">
       <div>
@@ -15,6 +17,11 @@ function ForgotPassword(props) {
       <div>
         <TMlogo />
       </div>
+
+      {isEmailInForgPaswNotFound && (
+          <div className="error-message">Email not found</div>
+        )}
+
       <div>
         <div name="email" className="input-div">
           <input 
@@ -30,16 +37,19 @@ function ForgotPassword(props) {
         <div className="submit-container">
           <button className="submit-button"
             onClick={() => {
-                props.sendChangePasswordRequest(email);
+                const isOk=props.sendChangePasswordRequest(email);
                 //TODO: check if email was found or not
-                navigate('/change-password-info');
+                if(isOk) {
+                  navigate('/change-password-info');
+                } 
+                else {
+                  setIsEmailInForgPaswNotFound(true);
+                }
             }}
             >
                 Send email</button>
         </div>
       </div>
-
-      <div className="forgot-password" onClick={() => navigate('/forgot-password')}>Forgot password?</div>
 
       <div className="login-signup-container">
           <button className="login-signup-button"

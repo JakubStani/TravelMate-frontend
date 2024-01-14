@@ -29,7 +29,6 @@ function App() {
   const toggleSideBar = () => {
     setSideBarOpen(!sideBarOpen);
   }
-
 const sendChangePasswordRequest = (email) => {
   fetch(`https://travelmatebackend.azurewebsites.net/api/v1/auth/resetPassword?email=${email}`, {
         method: 'GET',
@@ -38,10 +37,16 @@ const sendChangePasswordRequest = (email) => {
         },
         redirect: 'follow',
         //mode: 'no-cors'
-      }).then(response => response.text())
-      .then(result => {
-        console.log('test', result);
+      }).then(response => {
+        if(!response.ok) {
+          return false;
+        }
+        response.text();
+        return true;
       })
+      // .then(result => {
+      //   console.log('test', result);
+      // })
       .catch(error => console.log('error', error));
 };
 
