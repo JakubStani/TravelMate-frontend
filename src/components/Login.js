@@ -10,6 +10,7 @@ const Login = (props) => {
     const [password, setPassword] = useState('');
     const [user, setUser]= useState({})
     const [userToken, setUserToken] = useState('')
+    const [isUserNotFound, setIsUserNotFound] = useState(false);
 
     const sendLoginData = (data) => {
         data.preventDefault();
@@ -21,7 +22,15 @@ const Login = (props) => {
           headers: {
             'Content-Type': 'application/json'
           }
-        }).then(response => response.text())
+        }).then(response => {
+          console.log('server response', response);
+          console.log('server response status', response.status);
+          if(!response.ok) {
+            setIsUserNotFound(true);
+            throw new Error(`Network response was not ok, status: ${response.status}`);
+          }
+          response.text();
+        })
         .then(result => {
           const jsonResult = JSON.parse(result);
           console.log(jsonResult);
@@ -54,6 +63,9 @@ const Login = (props) => {
       <div>
         <TMlogo />
       </div>
+      {isUserNotFound && (
+          <div className="error-message">User not found <br/> Incorrect email or password</div>
+        )}
       <form onSubmit={sendLoginData}>
         <div name="email" className="input-div">
           <input 

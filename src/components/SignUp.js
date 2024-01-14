@@ -12,15 +12,18 @@ const SignUp = (props) => {
     const [password, setPassword1] = useState('');
     const [password2, setPassword2] = useState('');
     const [passwordError, setPasswordError] = useState("");
+    const [isSignUpError, setIsSignUpError] = useState(false);
 
     const sendSignUpData = (data) => {
         data.preventDefault();
         if (password !== password2) {
+            setIsSignUpError(false);
             setPasswordError("Passwords do not match");
             return;
         }
 
         if (password.length < 8) {
+            setIsSignUpError(false);
             setPasswordError("Password must be at least 8 characters long");
             return;
         }
@@ -36,13 +39,22 @@ const SignUp = (props) => {
             'Connection': 'keep-alive',
           }
         })
-        .then(response => response.text())
-        .then(result => console.log(result))
+        .then(response => {
+            if(!response.ok) {
+                setPasswordError(false);
+                setIsSignUpError(true);
+                throw new Error(`Network response was not ok, status: ${response.status}`);
+            }
+            response.text();
+        })
+        .then(result => {
+            console.log(result);
+            navigate('/');
+        })
         .catch(error => console.log('error', error));
         //.then((response) => console.log(response.json()))
 
-        console.log(JSON.stringify(newUser)); //TODO: add fetch POST method to send new user data to backend
-        navigate('/');
+        //console.log(JSON.stringify(newUser)); //TODO: add fetch POST method to send new user data to backend
     }
 
     return (
@@ -54,6 +66,10 @@ const SignUp = (props) => {
             <div>
                 <TMlogo />
             </div>
+
+            {isSignUpError && (
+                    <div className="error-message">Error <br /> Account could not been created</div>
+                )}
 
             <form onSubmit={sendSignUpData}>
 
