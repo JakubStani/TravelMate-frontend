@@ -41,8 +41,7 @@ function Home(props) {
 
   const [sharedPlansKindToFetch, setSharedPlansKindToFetch] = useState('browse')
 
-  
-  useEffect(() => {
+  const getTripPlansData = () => {
     fetch(`https://travelmatebackend.azurewebsites.net/api/v1/trips/${sharedPlansKindToFetch}`, {
           method: 'GET',
           headers: {
@@ -62,6 +61,10 @@ function Home(props) {
           //setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
         })
         .catch(error => console.log('error', error));
+  };
+
+  useEffect(() => {
+    getTripPlansData();
 
           // axios.get(endpoint, {headers})
           // .then(response => {
@@ -296,7 +299,7 @@ function Home(props) {
           <NavBar toggleSideBar={props.toggleSideBar}/>
           <div className='shared-plans-kinds'>
             <div onClick={()=>setSharedPlansKindToFetch('browse')}>All</div>
-            <div onClick={()=>setSharedPlansKindToFetch('browse')}>Followed</div>
+            <div onClick={()=>setSharedPlansKindToFetch('followed/events')}>Followed</div>
             <div onClick={()=>setSharedPlansKindToFetch('signed-up')}>Signed Up</div>
             <div onClick={()=>setSharedPlansKindToFetch('browse')}>My plans</div>
           </div>
