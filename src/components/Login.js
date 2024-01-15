@@ -29,9 +29,10 @@ const Login = (props) => {
             setIsUserNotFound(true);
             throw new Error(`Network response was not ok, status: ${response.status}`);
           }
-          response.text();
+          return response.text();
         })
         .then(result => {
+          console.log('res', result);
           const jsonResult = JSON.parse(result);
           console.log(jsonResult);
           setUserToken(jsonResult['access_token']);

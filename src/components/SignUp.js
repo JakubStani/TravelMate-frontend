@@ -45,7 +45,7 @@ const SignUp = (props) => {
                 setIsSignUpError(true);
                 throw new Error(`Network response was not ok, status: ${response.status}`);
             }
-            response.text();
+            return response.text();
         })
         .then(result => {
             console.log(result);
