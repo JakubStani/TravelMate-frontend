@@ -5,7 +5,7 @@ import { List } from "react-virtualized";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import './Home.css'
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 import SearchAndList from "../components/SearchAndList";
 
 function Home(props) {
@@ -44,7 +44,7 @@ function Home(props) {
   const [sharedPlansKindToFetch, setSharedPlansKindToFetch] = useState('browse')
 
   const getTripPlansData = () => {
-    fetch(`https://travelmatebackend.azurewebsites.net/api/v1/trips/${sharedPlansKindToFetch}`, {
+    fetch(`https://travelmatebackend.azurewebsites.net/api/v1/trips/${sharedPlansKindToFetch}?isCurrent=false`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -55,18 +55,20 @@ function Home(props) {
           //mode: 'no-cors'
         }).then(response => response.text())
         .then(result => {
-          console.log("result1", result);
+          //console.log("result1", result);
           const jsonResult = JSON.parse(result);
-          console.log("result2", jsonResult);
+          //console.log("result2", jsonResult);
           setSharedPlansData(jsonResult);
-          console.log("trips data 1 ", tripsMockupData);
+          console.log(jsonResult);
+          //console.log("trips data 1 ", tripsMockupData);
           //setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
         })
         .catch(error => console.log('error', error));
   };
 
   useEffect(() => {
-    if(allowedToRender){
+    if (allowedToRender)
+    {
       getTripPlansData();
     }
 
@@ -109,9 +111,9 @@ function Home(props) {
           //mode: 'no-cors'
         }).then(response => response.text())
         .then(result => {
-          console.log("result1", result);
+          //console.log("result1", result);
           const jsonResult = JSON.parse(result);
-          console.log("result2", jsonResult);
+          //console.log("result2", jsonResult);
           navigate('/trip-details', {state: jsonResult});
           //console.log("trips data 1 ", tripsMockupData);
           //setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
@@ -187,7 +189,7 @@ function Home(props) {
   const [dynamicData, setDynamicData] = useState([]);
 
   const getUserData = () => {
-    console.log("get userdata");
+    //console.log("get userdata");
     fetch(`https://travelmatebackend.azurewebsites.net/api/v1/users/search?pattern=${searchedUser}`, {
       method: 'GET',
       headers: {
@@ -198,16 +200,16 @@ function Home(props) {
       redirect: 'follow',
     }).then(response => response.text())
     .then(result => {
-      console.log("result1", result);
+      //console.log("result1", result);
       const jsonResult = JSON.parse(result);
-      console.log("result2", jsonResult);
+      //console.log("result2", jsonResult);
       setUsersData(jsonResult);
     })
     .catch(error => console.log('error', error));
   };
 
   const getFollowedData = () => {
-    console.log("get followed data");
+    //console.log("get followed data");
     fetch(`https://travelmatebackend.azurewebsites.net/api/v1/users/followed`, {
       method: 'GET',
       headers: {
@@ -218,9 +220,9 @@ function Home(props) {
       redirect: 'follow',
     }).then(response => response.text())
     .then(result => {
-      console.log("result1", result);
+      //console.log("result1", result);
       const jsonResult = JSON.parse(result);
-      console.log("result2", jsonResult);
+      //console.log("result2", jsonResult);
       setDynamicData(jsonResult);
     })
     .catch(error => console.log('error', error));
@@ -232,12 +234,12 @@ function Home(props) {
           return friend['firstName'].toUpperCase().includes(searchedFriend.toUpperCase().trim().replace(/\s/g, ""));
       });
       setDynamicData(newData);
-      console.log(newData);
+      //console.log(newData);
     }
   }
 
   useEffect(() => {
-    console.log("changes", searchedFriend);
+    //console.log("changes", searchedFriend);
     filterFriendData();
   }, [searchedFriend])
 
@@ -270,9 +272,9 @@ function Home(props) {
       //mode: 'no-cors'
     }).then(response => response.text())
     .then(result => {
-      console.log("result1", result);
+      //console.log("result1", result);
       const jsonResult = JSON.parse(result);
-      console.log("result2", jsonResult);
+      //console.log("result2", jsonResult);
       getFollowedData();
       //console.log("trips data 1 ", tripsMockupData);
       //setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
@@ -292,9 +294,9 @@ function Home(props) {
       redirect: 'follow',
     }).then(response => response.text())
     .then(result => {
-      console.log("result1", result);
+      //console.log("result1", result);
       const jsonResult = JSON.parse(result);
-      console.log("result2", jsonResult);
+      //console.log("result2", jsonResult);
       getFollowedData();
       //console.log("trips data 1 ", tripsMockupData);
       //setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
@@ -333,7 +335,7 @@ function Home(props) {
                     </div>
                 </div>
                 <div className="infinite-scroll-list">
-                {console.log("trips data 2 ", sharedPlansData)}
+                {/*console.log("trips data 2 ", sharedPlansData)*/}
                 {sharedPlansData.length>0 ? 
                   <List
                     width={800}
