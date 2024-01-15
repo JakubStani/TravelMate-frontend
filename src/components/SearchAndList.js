@@ -12,6 +12,7 @@ function SearchAndList(props) {
                                 search={(event)=> (event.key ==="Enter"? props.getData(): null)}
                                 whenTextChanges={(e)=> {props.setSearchedUser(e.target.value);}}
                                 searchedFriend={props.searchedUser}
+                                clear={props.clear}
                                 />
                             <div>
                                 <List

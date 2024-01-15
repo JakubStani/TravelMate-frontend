@@ -19,6 +19,7 @@ function SearchBar(props) {
                 <div className='cancel-container'>
                     <button
                         className='cancel-button'
+                        onClick={()=>props.clear()}
                     >
                         X
                     </button>

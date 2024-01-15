@@ -135,6 +135,26 @@ function Home(props) {
   };
 
   //render items in search and list sections
+
+  const clear= (flag) => {
+    if(flag==='followed') {
+      setSearchedFriend('');
+      filterFriendData();
+    }
+    else {
+      setSearchedUser('');
+      setUsersData([]);
+    }
+  };
+
+  const clearFollowed=() => {
+    clear('followed');
+  };
+
+  const clearUsers=() => {
+    clear('searchToFollow');
+  };
+
   const renderUser = ({index, key, style}) => {
 
     const customStyle = {
@@ -269,12 +289,20 @@ function Home(props) {
   };
 
   const filterFriendData = () => {
+    console.log(dynamicData);
       if(dynamicData.length>0 && searchedFriend!=="") {
         const newData= dynamicData.filter((friend) => {
-          return friend['firstName'].toUpperCase().includes(searchedFriend.toUpperCase().trim().replace(/\s/g, ""));
+          return friend['firstname'].toUpperCase().includes(searchedFriend.toUpperCase().trim().replace(/\s/g, ""));
       });
+
       setDynamicData(newData);
+      
       //console.log(newData);
+    }
+    else {
+      if(searchedFriend==='') {
+        getFollowedData();
+      }
     }
   }
 
@@ -381,6 +409,7 @@ function Home(props) {
                       searchedUser={searchedFriend}
                       usersData={dynamicData}
                       renderUser={renderFriend}
+                      clear={clearFollowed}
                       />
                     </div>
                 </div>
@@ -410,6 +439,7 @@ function Home(props) {
                       searchedUser={searchedUser}
                       usersData={usersData}
                       renderUser={renderUser}
+                      clear={clearUsers}
                       />
                     </div>
                 </div>
