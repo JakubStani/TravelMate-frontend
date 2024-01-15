@@ -36,15 +36,15 @@ function Home(props) {
   };
 
   const [sharedPlansData, setSharedPlansData]= useState([]);
-  //const [messageWhenNoPlansToShow, setMessageWhenNoPlansToShow] = useState('');
+  const [messageWhenNoPlansToShow, setMessageWhenNoPlansToShow] = useState('No plans have been shared yet');
 
   //changing site's title
   document.title = `TravelMate - Home`;
 
-  const [sharedPlansKindToFetch, setSharedPlansKindToFetch] = useState('browse')
+  const [sharedPlansKindToFetch, setSharedPlansKindToFetch] = useState('browse?isCurrent=true')
 
   const getTripPlansData = () => {
-    fetch(`https://travelmatebackend.azurewebsites.net/api/v1/trips/${sharedPlansKindToFetch}?isCurrent=true`, {
+    fetch(`https://travelmatebackend.azurewebsites.net/api/v1/trips/${sharedPlansKindToFetch}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -59,6 +59,18 @@ function Home(props) {
           const jsonResult = JSON.parse(result);
           //console.log("result2", jsonResult);
           setSharedPlansData(jsonResult);
+          if(jsonResult.length==0) {
+            console.log(sharedPlansKindToFetch);
+            sharedPlansKindToFetch==='browse?isCurrent=true' ?
+                  setMessageWhenNoPlansToShow('No plans have been shared yet')
+                  : sharedPlansKindToFetch === 'signed-up' ?
+                  setMessageWhenNoPlansToShow('You have not signed up for any trip yet')
+                  : dynamicData.length==0 ?
+                  setMessageWhenNoPlansToShow("You do not follow anyone")
+                  : sharedPlansKindToFetch === 'followed/events' ?
+                  setMessageWhenNoPlansToShow("No followed users' plans have been shared yet")
+                  : setMessageWhenNoPlansToShow('You have not shared any trip yet')
+          }
           console.log(jsonResult);
           //console.log("trips data 1 ", tripsMockupData);
           //setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
@@ -316,10 +328,10 @@ function Home(props) {
             <div>
               <NavBar toggleSideBar={props.toggleSideBar}/>
               <div className='shared-plans-kinds'>
-                <div onClick={()=>setSharedPlansKindToFetch('browse')}>All</div>
+                <div onClick={()=>setSharedPlansKindToFetch('browse?isCurrent=true')}>All</div>
                 <div onClick={()=>setSharedPlansKindToFetch('followed/events')}>Followed</div>
                 <div onClick={()=>setSharedPlansKindToFetch('signed-up')}>Signed Up</div>
-                <div onClick={()=>setSharedPlansKindToFetch('browse')}>My plans</div>
+                <div onClick={()=>setSharedPlansKindToFetch('browse?isCurrent=true')}>My plans</div>
               </div>
               <div className="content-container">
                 <div className="observed">
@@ -347,13 +359,7 @@ function Home(props) {
                 
                   />
                   //TODO: fix this to show correct message
-                  : sharedPlansKindToFetch === 'browse' ?
-                  <h1>No plans have been shared yet</h1>
-                  : sharedPlansData === 'followed' ?
-                  <h1>No followed users' plans have been shared yet</h1>
-                  : sharedPlansData === 'signed-up' ?
-                  <h1>You have not signed up for any trip yet</h1>
-                  : <h1>You have not shared any trip yet</h1>
+                  : messageWhenNoPlansToShow
 
                 }
                 </div>
