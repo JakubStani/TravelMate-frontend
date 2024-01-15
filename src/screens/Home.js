@@ -63,13 +63,14 @@ function Home(props) {
             console.log(sharedPlansKindToFetch);
             sharedPlansKindToFetch==='browse?isCurrent=true' ?
                   setMessageWhenNoPlansToShow('No plans have been shared yet')
-                  : sharedPlansKindToFetch === 'signed-up' ?
+                  : sharedPlansKindToFetch === 'signed-up?future=true' ?
+                  setMessageWhenNoPlansToShow('You have not signed up for any future trip yet')
+                  : sharedPlansKindToFetch === 'signed-up?future=false' ?
                   setMessageWhenNoPlansToShow('You have not signed up for any trip yet')
                   : dynamicData.length==0 ?
                   setMessageWhenNoPlansToShow("You do not follow anyone")
-                  : sharedPlansKindToFetch === 'followed/events' ?
-                  setMessageWhenNoPlansToShow("No followed users' plans have been shared yet")
-                  : setMessageWhenNoPlansToShow('You have not shared any trip yet')
+                  : setMessageWhenNoPlansToShow("No followed users' plans have been shared yet")
+                
           }
           console.log(jsonResult);
           //console.log("trips data 1 ", tripsMockupData);
@@ -330,8 +331,8 @@ function Home(props) {
               <div className='shared-plans-kinds'>
                 <div onClick={()=>setSharedPlansKindToFetch('browse?isCurrent=true')}>All</div>
                 <div onClick={()=>setSharedPlansKindToFetch('followed/events')}>Followed</div>
-                <div onClick={()=>setSharedPlansKindToFetch('signed-up')}>Signed Up</div>
-                <div onClick={()=>setSharedPlansKindToFetch('browse?isCurrent=true')}>My plans</div>
+                <div onClick={()=>setSharedPlansKindToFetch('signed-up?future=true')}>Signed Up</div>
+                <div onClick={()=>setSharedPlansKindToFetch('signed-up?future=false')}>My trip history</div>
               </div>
               <div className="content-container">
                 <div className="observed">
