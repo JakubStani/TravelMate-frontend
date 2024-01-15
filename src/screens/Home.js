@@ -146,6 +146,8 @@ function Home(props) {
         ...style
     };
 
+    const isFollowed = followedUsersIdDic.filter(val => val==usersData[index]["id"]).length>0;
+
     return (
         <div key={key} style={customStyle}>
         <div>
@@ -156,9 +158,16 @@ function Home(props) {
                 {usersData[index]["email"]}
             </div>
         </div>
-        <div>
-            <button onClick={()=> follow(usersData[index]["id"])}>observe</button>
-        </div>
+        {!isFollowed &&
+          <div>
+            <button onClick={()=> follow(usersData[index]["id"])}>follow</button>
+          </div>
+        }
+        { isFollowed &&
+          <div>
+            <div>followed</div>
+          </div>
+        }
     </div>
     );
   };
@@ -201,6 +210,21 @@ function Home(props) {
   const [searchedFriend, setSearchedFriend] = useState("");
   const [dynamicData, setDynamicData] = useState([]);
 
+  const [followedUsersIdDic, setFollowedUsersIdDic] = useState([]);
+
+  //prepars data for followed users id dic
+  const createFromFetchedData = (fetchedFollowedUsersData) =>{
+    return fetchedFollowedUsersData.map((foUser) => {
+      return {[foUser['id']]: foUser['id']};
+    });
+  };
+
+  const crFrFD = (fetchedFollowedUsersData) => {
+    return fetchedFollowedUsersData.map((foUser) => {
+      return foUser['id'];
+    });
+  }
+
   const getUserData = () => {
     //console.log("get userdata");
     fetch(`https://travelmatebackend.azurewebsites.net/api/v1/users/search?pattern=${searchedUser}`, {
@@ -237,6 +261,9 @@ function Home(props) {
       const jsonResult = JSON.parse(result);
       //console.log("result2", jsonResult);
       setDynamicData([...jsonResult]);
+      const folUsDic = crFrFD(jsonResult);
+      setFollowedUsersIdDic([...folUsDic]);
+      console.log('folUsDic', [...folUsDic]);
     })
     .catch(error => console.log('error', error));
   };
@@ -292,6 +319,7 @@ function Home(props) {
       console.log('i amgetting followed data');
 
       getFollowedData();
+      getUserData();
       //console.log("trips data 1 ", tripsMockupData);
       //setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
     })
