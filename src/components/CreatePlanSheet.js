@@ -51,23 +51,25 @@ function CreatePlanSheet() {
 
     //newTrip data
     const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('')
-    const [destination, setDestination] = useState('')
-    const [startDate, setStartDate] = useState(curDateYMDFormat)
-    const [endDate, setEndDate] = useState('')
-    const [estimatedPrice, setEstimatedPrice] = useState('')
-    const [numberOfPeople, setNumberOfPeople] = useState(0)
-    const [pointOfStart, setPointOfStart] = useState('')
+    const [description, setDescription] = useState('');
+    const [destination, setDestination] = useState('');
+    const [startDate, setStartDate] = useState(curDateYMDFormat);
+    const [endDate, setEndDate] = useState('');
+    const [estimatedPrice, setEstimatedPrice] = useState('');
+    const [numberOfPeople, setNumberOfPeople] = useState(0);
+    const [pointOfStart, setPointOfStart] = useState('');
 
     //hotelInfo
-    const [hotelName, setHotelName] = useState('')
-    const [country, setCountry] = useState('')
-    const [city, setCity] = useState('')
-    const [street, setStreet] = useState('')
-    const [postalCode, setPostalCode] = useState('')
-    const [streetNumber, setStreetNumber] = useState('')
-    const [standard, setStandard] = useState('')
-    const [hotelDescription, setHotelDescription] = useState('')
+    const [hotelName, setHotelName] = useState('');
+    const [country, setCountry] = useState('');
+    const [city, setCity] = useState('');
+    const [street, setStreet] = useState('');
+    const [postalCode, setPostalCode] = useState('');
+    const [streetNumber, setStreetNumber] = useState('');
+    const [standard, setStandard] = useState('');
+    const [hotelDescription, setHotelDescription] = useState('');
+
+    const [errorMessage, setErrorMessage] = useState();
 
     const createNewTrip = (event) => {
       event.preventDefault();
@@ -93,27 +95,47 @@ function CreatePlanSheet() {
                 "standard": standard,
                 "hotelDescription": hotelDescription
               }
-        };  
-
-        fetch('https://travelmatebackend.azurewebsites.net/api/v1/trips/create', {
-          method: 'POST',
-          body: JSON.stringify(tripData),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+        };
+        const isNumber=/^[0-9]+$/;
+        if(isNumber.test(numberOfPeople.trim())) {
+          if (parseInt(numberOfPeople)<2) {
+            setErrorMessage('Number of people must be greater than 1');
           }
-        }).then(response => response.text())
-        .then(result => {
-          console.log('server answer for trip creation: ', result);
-          navigate('/home');
-        })
-        .catch(error => console.log('error', error));
-
-    }
+          else {
+            fetch('https://travelmatebackend.azurewebsites.net/api/v1/trips/create', {
+              method: 'POST',
+              body: JSON.stringify(tripData),
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+              }
+            }).then(response => {
+              if(!response.ok) {
+                if(response.status==400) {
+                  setErrorMessage('Trip must begin in the future');
+                }
+              }
+              response.text();
+            })
+            .then(result => {
+              console.log('server answer for trip creation: ', result);
+              navigate('/home');
+            })
+            .catch(error => console.log('error', error));
+          }
+        }
+        else{
+          setErrorMessage('Incorrect number of people');
+        }
+    };
   return (
     <div className='shared-plan-data-container'>
 
     <h1>Trip data:</h1>
+
+    {errorMessage!=null &&
+      <h2 className='error-message'>{errorMessage}</h2>
+    }
 
     <form onSubmit={createNewTrip}>
         <div name="title" className="input">
@@ -282,7 +304,7 @@ function CreatePlanSheet() {
         </div>
 
         <div className="submit-container">
-          <button className="submit-button">Submit</button>
+          <button className="submit-button">Create and share</button>
         </div>
       </form>
 
