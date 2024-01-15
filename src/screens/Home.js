@@ -216,7 +216,7 @@ function Home(props) {
       //console.log("result1", result);
       const jsonResult = JSON.parse(result);
       //console.log("result2", jsonResult);
-      setUsersData(jsonResult);
+      setUsersData([...jsonResult]);
     })
     .catch(error => console.log('error', error));
   };
@@ -236,7 +236,7 @@ function Home(props) {
       //console.log("result1", result);
       const jsonResult = JSON.parse(result);
       //console.log("result2", jsonResult);
-      setDynamicData(jsonResult);
+      setDynamicData([...jsonResult]);
     })
     .catch(error => console.log('error', error));
   };
@@ -283,11 +283,14 @@ function Home(props) {
       },
       redirect: 'follow',
       //mode: 'no-cors'
-    }).then(response => response.text())
+    }).then(response => {
+      return response.text();
+    })
     .then(result => {
       //console.log("result1", result);
-      const jsonResult = JSON.parse(result);
       //console.log("result2", jsonResult);
+      console.log('i amgetting followed data');
+
       getFollowedData();
       //console.log("trips data 1 ", tripsMockupData);
       //setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
@@ -305,10 +308,16 @@ function Home(props) {
 
       },
       redirect: 'follow',
-    }).then(response => response.text())
+    }).then(response => {
+      if(!response.ok) {
+        throw new Error();
+      }
+    
+      return response.text();
+    })
     .then(result => {
+      console.log('unf res', result);
       //console.log("result1", result);
-      const jsonResult = JSON.parse(result);
       //console.log("result2", jsonResult);
       getFollowedData();
       //console.log("trips data 1 ", tripsMockupData);
