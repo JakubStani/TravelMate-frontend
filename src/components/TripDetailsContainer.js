@@ -1,8 +1,75 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './TripDetailsContainer.css'
 
 function TripDetailsContainer(props) {
     console.log("trip data:", props.tripData);
+
+    const [isWeatherForecastFound, setIsWeatherForecastFound] = useState(false);
+    const [weatherForecast, setWeatherForecast] = useState();
+    const [renderWeatherData, setRenderWeatherData] = useState(false);
+    const [userTripRelation, setUserTriprelation] =useState();
+
+
+    const getWeatherForecast=() => {
+        try {
+        const city = props.tripData['destination'].trim().replace(/\s+/g, '-');
+        fetch(`http://penguin.linux.test:81/weather_microservice/weather.php?city=${city}`)
+            .then(response => {
+                if(!response.ok){
+                    throw new Error();
+                }
+                console.log('weather forecast resp', response);
+                console.log('ojoj');
+                return response.text();
+            })
+            .then(result => {
+                console.log('res', result);
+                const weatherData=JSON.parse(result);
+                if(!('error' in weatherData))
+                {
+                    setIsWeatherForecastFound(true);
+                    setWeatherForecast(weatherData);
+                    console.log('wd', weatherData);
+                }
+            }).catch(error => console.log('error', error))
+        }
+        catch (error) {
+            console.log(`Weather forecast not found for destination=${props.tripData['destination']}`)
+        };
+    };
+
+    const isUserThisTripAuthor= () => {
+        fetch(`https://travelmatebackend.azurewebsites.net/api/v1/trips/is-created/${props.tripData['id']}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+
+          },
+          redirect: 'follow',
+          //mode: 'no-cors'
+        }).then(response => response.text())
+        .then(result => {
+            console.log('is', result);
+            console.log(userTripRelation);
+          if(result) {
+            setUserTriprelation('author');
+            console.log('author');
+          }
+        })
+        .catch(error => console.log('error', error));
+    };
+
+    useEffect(() => {
+        getWeatherForecast();
+        isUserThisTripAuthor();
+    }, []);
+
+    useEffect(()=>{
+        setRenderWeatherData(true);
+
+    }, [weatherForecast])
+
     return (
         <div>
             <div className='profile-title-container'>Trip Details</div>
@@ -69,12 +136,51 @@ function TripDetailsContainer(props) {
                     <h3>Hotel description</h3>
                     <p>{props.tripData['hotelInformation']['hotelDescription']}</p>
                 </div>
+                <h1>Weather forecast</h1>
+                {isWeatherForecastFound && weatherForecast!=null && renderWeatherData &&
+                    <div> 
+                        <div className='profile-specific-data-container'>
+                            <h3>For destination</h3>
+                            <p>{weatherForecast['location']['name']}, {weatherForecast['location']['country']}</p>
+                        </div>
+                        <div className='profile-specific-data-container'>
+                            <h3>For date</h3>
+                            <p>{weatherForecast['current']['last_updated']}</p>
+                        </div>
+                        <div className='profile-specific-data-container'>
+                            <h3>{"Temperature"}</h3>
+                            <p>{`${weatherForecast['current']['temp_c']}\u00B0C`}</p>
+                        </div>
+                        <div className='profile-specific-data-container'>
+                            <h3>Conditions</h3>
+                            <p>{weatherForecast['current']['condition']['text']}<img src={weatherForecast['current']['condition']['icon']}/></p>
+                        </div>
+                        <div className='profile-specific-data-container'>
+                            <h3>{'Pressure [millibars]'}</h3>
+                            <p>{weatherForecast['current']['pressure_mb']}</p>
+                        </div>
+                        <div className='profile-specific-data-container'>
+                            <h3>Humidity</h3>
+                            <p>{`${weatherForecast['current']['humidity']}%`}</p>
+                        </div>
+                        <div className='profile-specific-data-container'>
+                            <h3>Cloud cover</h3>
+                            <p>{`${weatherForecast['current']['cloud']}%`}</p>
+                        </div>
+                    </div>
+                }
+                {
+                    renderWeatherData && !weatherForecast &&
+                    <h2>Not found for destination: {props.tripData['destination']}</h2>
+                }
             </div>
+            {userTripRelation!=='author' && userTripRelation!=null &&
             <div className='profile-action-container'>
                 <div onClick={()=> props.signUpForTrip()}>
                     <p>Sign up for this trip</p>
                 </div>
             </div>
+            }
         </div>
     )
 }
