@@ -59,10 +59,10 @@ const sendChangePasswordRequest = (email) => {
             <Routes>
               <Route exact path='/' element={<Login updateLoginOrSignUp={updateLoginOrSignUp} />} />
               <Route exact path='/sign-up' element={<SignUp updateLoginOrSignUp={updateLoginOrSignUp} />} />
-              <Route exact path='/home' element={<Home sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>} />
-              <Route exact path='/profile' element={<ProfileScreen sendChangePasswordRequest={sendChangePasswordRequest} sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
-              <Route exact path='/create-plan' element={<CreatePlan sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
-              <Route exact path='/trip-details' element={<TripDetails sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
+              <Route exact path='/home' element={<Home setLoginSignUp={setLoginSignUp} sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>} />
+              <Route exact path='/profile' element={<ProfileScreen sendChangePasswordRequest={sendChangePasswordRequest} setLoginSignUp={setLoginSignUp} sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
+              <Route exact path='/create-plan' element={<CreatePlan setLoginSignUp={setLoginSignUp} sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
+              <Route exact path='/trip-details' element={<TripDetails setLoginSignUp={setLoginSignUp} sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
               <Route exact path='/change-password/:token' element={<ChangePassword sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
               <Route exact path='/change-password-info' element={<ChangePasswordInfo />} />
               <Route exact path='/friends' element={<FriendsScreen sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>

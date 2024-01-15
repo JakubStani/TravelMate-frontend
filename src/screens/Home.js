@@ -12,6 +12,8 @@ function Home(props) {
 
   const navigate = useNavigate();
 
+  const [allowedToRender, setAllowedToRender] = useState(false);
+
   const tripsMockupData = [
     {
       "id": 1,
@@ -64,7 +66,9 @@ function Home(props) {
   };
 
   useEffect(() => {
-    getTripPlansData();
+    if(allowedToRender){
+      getTripPlansData();
+    }
 
           // axios.get(endpoint, {headers})
           // .then(response => {
@@ -76,7 +80,7 @@ function Home(props) {
           //   // Obsługa błędu
           //   console.error('Error:', error);
           // });
-  }, [sharedPlansKindToFetch]);
+  }, [sharedPlansKindToFetch, allowedToRender]);
 
   const renderSharedTripPlan = ({index, key, style}) => (
     <div key={key} style={{marginBlock: '100px'}} onClick={() => showTripsDetails(sharedPlansData[index]['id'])}>
@@ -240,11 +244,13 @@ function Home(props) {
   useEffect(() => {
     //checks whether user is logged in
     //if not, redirects to login page
-    if('userToken' in localStorage)
+    if(localStorage.getItem('userToken')!=null)
     {
       getFollowedData();
+      setAllowedToRender(true);
     }
     else {
+      props.setLoginSignUp('Login');
       navigate('/');
     }
   }, []);
@@ -298,71 +304,75 @@ function Home(props) {
   //***************
 
   return (
-    <SideBar
-      sideBarOpen={props.sideBarOpen}
-      setSideBarOpen={props.setSideBarOpen}
-      toggleSideBar={props.toggleSideBar}
-      content={
-        <div>
-          <NavBar toggleSideBar={props.toggleSideBar}/>
-          <div className='shared-plans-kinds'>
-            <div onClick={()=>setSharedPlansKindToFetch('browse')}>All</div>
-            <div onClick={()=>setSharedPlansKindToFetch('followed/events')}>Followed</div>
-            <div onClick={()=>setSharedPlansKindToFetch('signed-up')}>Signed Up</div>
-            <div onClick={()=>setSharedPlansKindToFetch('browse')}>My plans</div>
-          </div>
-          <div className="content-container">
-            <div className="observed">
-              <h3>Followed</h3>
-              <div className="search-to-follow">
-                <SearchAndList 
-                  getData={filterFriendData}
-                  setSearchedUser={setSearchedFriend}
-                  searchedUser={searchedFriend}
-                  usersData={dynamicData}
-                  renderUser={renderFriend}
-                  />
+    <div>
+      {allowedToRender &&
+        <SideBar
+          sideBarOpen={props.sideBarOpen}
+          setSideBarOpen={props.setSideBarOpen}
+          toggleSideBar={props.toggleSideBar}
+          content={
+            <div>
+              <NavBar toggleSideBar={props.toggleSideBar}/>
+              <div className='shared-plans-kinds'>
+                <div onClick={()=>setSharedPlansKindToFetch('browse')}>All</div>
+                <div onClick={()=>setSharedPlansKindToFetch('followed/events')}>Followed</div>
+                <div onClick={()=>setSharedPlansKindToFetch('signed-up')}>Signed Up</div>
+                <div onClick={()=>setSharedPlansKindToFetch('browse')}>My plans</div>
+              </div>
+              <div className="content-container">
+                <div className="observed">
+                  <h3>Followed</h3>
+                  <div className="search-to-follow">
+                    <SearchAndList 
+                      getData={filterFriendData}
+                      setSearchedUser={setSearchedFriend}
+                      searchedUser={searchedFriend}
+                      usersData={dynamicData}
+                      renderUser={renderFriend}
+                      />
+                    </div>
                 </div>
-            </div>
-            <div className="infinite-scroll-list">
-            {console.log("trips data 2 ", sharedPlansData)}
-            {sharedPlansData.length>0 ? 
-              <List
-                width={800}
-                height={700}
-                rowRenderer={renderSharedTripPlan}
-                rowCount={sharedPlansData.length}
-                rowHeight={650}
+                <div className="infinite-scroll-list">
+                {console.log("trips data 2 ", sharedPlansData)}
+                {sharedPlansData.length>0 ? 
+                  <List
+                    width={800}
+                    height={700}
+                    rowRenderer={renderSharedTripPlan}
+                    rowCount={sharedPlansData.length}
+                    rowHeight={650}
+                    
                 
-            
-              />
-              //TODO: fix this to show correct message
-              : sharedPlansKindToFetch === 'browse' ?
-              <h1>No plans have been shared yet</h1>
-              : sharedPlansData === 'followed' ?
-              <h1>No followed users' plans have been shared yet</h1>
-              : sharedPlansData === 'signed-up' ?
-              <h1>You have not signed up for any trip yet</h1>
-              : <h1>You have not shared any trip yet</h1>
-
-            }
-            </div>
-            <div className="right-side-column">
-              <h3>search to follow</h3>
-              <div className="search-to-follow">
-                <SearchAndList 
-                  getData={getUserData}
-                  setSearchedUser={setSearchedUser}
-                  searchedUser={searchedUser}
-                  usersData={usersData}
-                  renderUser={renderUser}
                   />
+                  //TODO: fix this to show correct message
+                  : sharedPlansKindToFetch === 'browse' ?
+                  <h1>No plans have been shared yet</h1>
+                  : sharedPlansData === 'followed' ?
+                  <h1>No followed users' plans have been shared yet</h1>
+                  : sharedPlansData === 'signed-up' ?
+                  <h1>You have not signed up for any trip yet</h1>
+                  : <h1>You have not shared any trip yet</h1>
+
+                }
                 </div>
+                <div className="right-side-column">
+                  <h3>search to follow</h3>
+                  <div className="search-to-follow">
+                    <SearchAndList 
+                      getData={getUserData}
+                      setSearchedUser={setSearchedUser}
+                      searchedUser={searchedUser}
+                      usersData={usersData}
+                      renderUser={renderUser}
+                      />
+                    </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          }
+        />
       }
-    />
+    </div>
   );
 }
 

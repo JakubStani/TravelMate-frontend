@@ -34,11 +34,11 @@ function ProfileScreen(props) {
       .catch(error => console.log('error', error));
   }
 
-
+  const [allowedToRender, setAllowedToRender] = useState(false);
   useEffect(() => {
     //checks whether user is logged in
     //if not, redirects to login page
-    if('userToken' in localStorage)
+    if(localStorage.getItem('userToken')!=null)
     {
       fetch('https://travelmatebackend.azurewebsites.net/api/v1/users/me', {
           method: 'GET',
@@ -55,10 +55,13 @@ function ProfileScreen(props) {
           setMyData(jsonResult);
         })
         .catch(error => console.log('error', error));
+        setAllowedToRender(true);
     }
     else {
+      props.setLoginSignUp('Login');
       navigate('/');
     }
+    console.log('prof scr is logged in',localStorage.getItem('userToken'));
   }, []);
 
   useEffect(() => {
@@ -72,98 +75,102 @@ function ProfileScreen(props) {
   };
 
   return (
-    <SideBar
-      sideBarOpen={props.sideBarOpen}
-      setSideBarOpen={props.setSideBarOpen}
-      toggleSideBar={props.toggleSideBar}
-      content={
-        <div className="App">
-          <header className="App-header">
-            <NavBar toggleSideBar={props.toggleSideBar}/>
-            <div className='profile-title-container'>Profile</div>
-            <div className='profile-data-container'>
-              <form>
-                <div className='profile-specific-data-container'>
-                    <p>First name</p>
-                    {!isEdit&&<p>{firstName}</p>}
-                    {isEdit &&
-                      <input 
-                      className="input"
-                      type="text" 
-                      required
-                      placeholder="Last name"
-                      value={firstName}
-                      onChange={(value) => setFirstName (value.target.value)}
-                      ></input>}
+    <div>
+      {allowedToRender &&
+        <SideBar
+          sideBarOpen={props.sideBarOpen}
+          setSideBarOpen={props.setSideBarOpen}
+          toggleSideBar={props.toggleSideBar}
+          content={
+            <div className="App">
+              <header className="App-header">
+                <NavBar toggleSideBar={props.toggleSideBar}/>
+                <div className='profile-title-container'>Profile</div>
+                <div className='profile-data-container'>
+                  <form>
+                    <div className='profile-specific-data-container'>
+                        <p>First name</p>
+                        {!isEdit&&<p>{firstName}</p>}
+                        {isEdit &&
+                          <input 
+                          className="input"
+                          type="text" 
+                          required
+                          placeholder="Last name"
+                          value={firstName}
+                          onChange={(value) => setFirstName (value.target.value)}
+                          ></input>}
+                    </div>
+                    <div className='profile-specific-data-container'>
+                        <p>Last name</p>
+                        {!isEdit&&<p>{lastName}</p>}
+                        {isEdit &&
+                          <input 
+                          className="input"
+                          type="text" 
+                          required
+                          placeholder="Last name"
+                          value={lastName}
+                          onChange={(value) => setLastName (value.target.value)}
+                          ></input>}
+                    </div>
+                    <div className='profile-specific-data-container'>
+                        <p>Email</p>
+                        {!isEdit&&
+                          <p>{email}</p>
+                          }
+                        {isEdit &&
+                          <input 
+                          className="input"
+                          type="email" 
+                          required
+                          placeholder="Email"
+                          value={email}
+                          onChange={(value) => setEmail(value.target.value)}
+                          ></input>}
+                    </div>
+                  </form>
                 </div>
-                <div className='profile-specific-data-container'>
-                    <p>Last name</p>
-                    {!isEdit&&<p>{lastName}</p>}
-                    {isEdit &&
-                      <input 
-                      className="input"
-                      type="text" 
-                      required
-                      placeholder="Last name"
-                      value={lastName}
-                      onChange={(value) => setLastName (value.target.value)}
-                      ></input>}
+                <div className='profile-action-container'>
+                    {!isEdit&&<div onClick={()=>setIsEdit(true)}>
+                        <p>Edit</p>
+                    </div>}
+                    {isEdit&&<div onClick={()=> {
+                      setIsEdit(false);
+                      changeEmail();
+                      }}>
+                        <p>Save</p>
+                    </div>}
+                    {isEdit&&<div onClick={()=>{
+                      setIsEdit(false);
+                      setUserDataToShow();
+                      }}>
+                        <p>Cancel</p>
+                    </div>}
                 </div>
-                <div className='profile-specific-data-container'>
-                    <p>Email</p>
-                    {!isEdit&&
-                      <p>{email}</p>
-                      }
-                    {isEdit &&
-                      <input 
-                      className="input"
-                      type="email" 
-                      required
-                      placeholder="Email"
-                      value={email}
-                      onChange={(value) => setEmail(value.target.value)}
-                      ></input>}
-                </div>
-              </form>
-            </div>
-            <div className='profile-action-container'>
-                {!isEdit&&<div onClick={()=>setIsEdit(true)}>
-                    <p>Edit</p>
-                </div>}
-                {isEdit&&<div onClick={()=> {
-                  setIsEdit(false);
-                  changeEmail();
-                  }}>
-                    <p>Save</p>
-                </div>}
-                {isEdit&&<div onClick={()=>{
-                  setIsEdit(false);
-                  setUserDataToShow();
-                  }}>
-                    <p>Cancel</p>
-                </div>}
-            </div>
 
-            <div className='profile-action-container'
-              onClick={() => {
-                props.sendChangePasswordRequest(email);
-                navigate('/change-password-info');}
-              }
-              >
-                <div>
-                    <p>Change password</p>
+                <div className='profile-action-container'
+                  onClick={() => {
+                    props.sendChangePasswordRequest(email);
+                    navigate('/change-password-info');}
+                  }
+                  >
+                    <div>
+                        <p>Change password</p>
+                    </div>
                 </div>
-            </div>
 
-            <div className='profile-action-container'>
-                <div>
-                    <p>Delete account</p>
+                <div className='profile-action-container'>
+                    <div>
+                        <p>Delete account</p>
+                    </div>
                 </div>
+              </header>
             </div>
-          </header>
-        </div>
+          }
+        />
       }
-    />
+    </div>
   );
 };
 

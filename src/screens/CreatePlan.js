@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import CreatePlanSheet from '../components/CreatePlanSheet'
 import './CreatePlan.css'
 import SideBar from '../shared/SideBar'
@@ -9,34 +9,42 @@ function CreatePlan(props) {
 
   const navigate = useNavigate();
 
+  const [allowedToRender, setAllowedToRender] = useState(false);
+
   useEffect(() => {
-    if(!'userToken' in localStorage)
-    {
+    if(localStorage.getItem('userToken')==null) {
+      props.setLoginSignUp('Login');
       navigate('/');
+    }
+    else {
+      setAllowedToRender(true);
     }
   }, []);
   return (
-
-    <SideBar
-      sideBarOpen={props.sideBarOpen}
-      setSideBarOpen={props.setSideBarOpen}
-      toggleSideBar={props.toggleSideBar}
-      content={
-        <div>
-          <header>
-            <NavBar toggleSideBar={props.toggleSideBar}/>
-            <div className='main-container'>
-              <div className='header-container'>
-                  <h1>Create Plan</h1>
-              </div>
-              <div className='create-plan-sheet-container'>
-                  <CreatePlanSheet />
-              </div>
+    <div>
+      {allowedToRender &&
+        <SideBar
+          sideBarOpen={props.sideBarOpen}
+          setSideBarOpen={props.setSideBarOpen}
+          toggleSideBar={props.toggleSideBar}
+          content={
+            <div>
+              <header>
+                <NavBar toggleSideBar={props.toggleSideBar}/>
+                <div className='main-container'>
+                  <div className='header-container'>
+                      <h1>Create Plan</h1>
+                  </div>
+                  <div className='create-plan-sheet-container'>
+                      <CreatePlanSheet />
+                  </div>
+                </div>
+              </header>
             </div>
-          </header>
-        </div>
+          }
+        />
       }
-    />
+    </div>
   )
 }
 

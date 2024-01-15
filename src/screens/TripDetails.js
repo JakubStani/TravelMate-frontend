@@ -31,34 +31,42 @@ function TripDetails(props) {
   //     setTitle(location.state['title']);
   //   }
 
-
+  const [allowedToRender, setAllowedToRender] = useState(false);
   useEffect(() => {
     //checks whether user is logged in
     //if not, redirects to login page
-    if(!'userToken' in localStorage)
+    if(localStorage.getItem('userToken')==null)
     {
+      props.setLoginSignUp('Login');
       navigate('/');
+    }
+    else {
+      setAllowedToRender(true);
     }
   }, []);
 
   return (
-    <SideBar
-      sideBarOpen={props.sideBarOpen}
-      setSideBarOpen={props.setSideBarOpen}
-      toggleSideBar={props.toggleSideBar}
-      content={
-        <div className="App">
-            <header className="App-header">
-                <NavBar toggleSideBar={props.toggleSideBar}/>
-                    <TripDetailsContainer 
-                      tripData={location.state}
-                      signUpForTrip={signUpForTrip}
-                    />
+    <div>
+      {allowedToRender &&
+        <SideBar
+        sideBarOpen={props.sideBarOpen}
+        setSideBarOpen={props.setSideBarOpen}
+        toggleSideBar={props.toggleSideBar}
+        content={
+          <div className="App">
+              <header className="App-header">
+                  <NavBar toggleSideBar={props.toggleSideBar}/>
+                      <TripDetailsContainer 
+                        tripData={location.state}
+                        signUpForTrip={signUpForTrip}
+                      />
 
-            </header>
-        </div>
-      }
-    />
+              </header>
+          </div>
+        }
+      />
+    }
+  </div>
 
   )
 }
