@@ -31,7 +31,7 @@ function SideBar(props) {
         open={props.sideBarOpen}
         pullRight
         onSetOpen={props.setSideBarOpen}
-        styles={{sidebar: {background: 'black'}}}
+        styles={{sidebar: {background: 'blueviolet', borderTopLeftRadius: '10px', borderBottomLeftRadius: '10px'}}}
         sidebarClassName="custom-sidebar"
     >
         {props.content}
