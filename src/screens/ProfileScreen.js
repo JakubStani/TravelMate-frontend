@@ -36,7 +36,11 @@ function ProfileScreen(props) {
 
 
   useEffect(() => {
-    fetch('https://travelmatebackend.azurewebsites.net/api/v1/users/me', {
+    //checks whether user is logged in
+    //if not, redirects to login page
+    if('userToken' in localStorage)
+    {
+      fetch('https://travelmatebackend.azurewebsites.net/api/v1/users/me', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -51,6 +55,10 @@ function ProfileScreen(props) {
           setMyData(jsonResult);
         })
         .catch(error => console.log('error', error));
+    }
+    else {
+      navigate('/');
+    }
   }, []);
 
   useEffect(() => {

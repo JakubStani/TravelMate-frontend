@@ -238,8 +238,16 @@ function Home(props) {
   }, [searchedFriend])
 
   useEffect(() => {
-    getFollowedData();
-  }, [])
+    //checks whether user is logged in
+    //if not, redirects to login page
+    if('userToken' in localStorage)
+    {
+      getFollowedData();
+    }
+    else {
+      navigate('/');
+    }
+  }, []);
   //*********
 
   //actions on user

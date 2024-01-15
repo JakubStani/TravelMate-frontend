@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CreatePlanSheet from '../components/CreatePlanSheet'
 import './CreatePlan.css'
 import SideBar from '../shared/SideBar'
 import NavBar from '../shared/NavBar'
+import { useNavigate } from 'react-router-dom'
 
 function CreatePlan(props) {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(!'userToken' in localStorage)
+    {
+      navigate('/');
+    }
+  }, []);
   return (
 
     <SideBar
