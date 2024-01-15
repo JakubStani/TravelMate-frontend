@@ -44,7 +44,7 @@ function Home(props) {
   const [sharedPlansKindToFetch, setSharedPlansKindToFetch] = useState('browse')
 
   const getTripPlansData = () => {
-    fetch(`https://travelmatebackend.azurewebsites.net/api/v1/trips/${sharedPlansKindToFetch}?isCurrent=false`, {
+    fetch(`https://travelmatebackend.azurewebsites.net/api/v1/trips/${sharedPlansKindToFetch}?isCurrent=true`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
