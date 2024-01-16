@@ -18,9 +18,12 @@ function SideBar(props) {
                 navigate('/profile');
                 props.toggleSideBar();
                 }}>Account</p>
-            <a href="/friends">Friends</a>
             <p>Travel history</p>
             <p>Settings</p>
+            <p onClick={()=>{
+                navigate('/send-report');
+                props.toggleSideBar();
+                }}>Send report</p>
             <p onClick={() => logout()}>Logout</p>
             <p onClick={()=> props.toggleSideBar()}>X</p>
         </div>
