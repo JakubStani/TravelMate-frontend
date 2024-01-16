@@ -7,7 +7,6 @@ function TripDetailsContainer(props) {
     const [isWeatherForecastFound, setIsWeatherForecastFound] = useState(false);
     const [weatherForecast, setWeatherForecast] = useState();
     const [renderWeatherData, setRenderWeatherData] = useState(false);
-    const [userTripRelation, setUserTriprelation] =useState();
 
 
     const getWeatherForecast=() => {
@@ -38,31 +37,9 @@ function TripDetailsContainer(props) {
         };
     };
 
-    const isUserThisTripAuthor= () => {
-        fetch(`https://travelmatebackend.azurewebsites.net/api/v1/trips/is-created/${props.tripData['id']}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('userToken')}`
-
-          },
-          redirect: 'follow',
-          //mode: 'no-cors'
-        }).then(response => response.text())
-        .then(result => {
-            console.log('is', result);
-            console.log(userTripRelation);
-          if(result) {
-            setUserTriprelation('author');
-            console.log('author');
-          }
-        })
-        .catch(error => console.log('error', error));
-    };
-
     useEffect(() => {
         getWeatherForecast();
-        isUserThisTripAuthor();
+        //props.isUserThisTripAuthor();
     }, []);
 
     useEffect(()=>{
@@ -174,13 +151,6 @@ function TripDetailsContainer(props) {
                     <h2>Not found for destination: {props.tripData['destination']}</h2>
                 }
             </div>
-            {userTripRelation!=='author' && userTripRelation!=null &&
-            <div className='profile-action-container'>
-                <div onClick={()=> props.signUpForTrip()}>
-                    <p>Sign up for this trip</p>
-                </div>
-            </div>
-            }
         </div>
     )
 }

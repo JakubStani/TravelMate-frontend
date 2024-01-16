@@ -21,11 +21,81 @@ function TripDetails(props) {
         //mode: 'no-cors'
       }).then(response => response.text())
       .then(result => {
-        const jsonResult = JSON.parse(result);
+        const newUTR='signed-up';
+        console.log('sign up!');
+        setUserTriprelation(newUTR);
       })
       .catch(error => console.log('error', error));
-  }
+  };
   //const [title, setTitle] = useState('');
+
+  const signOutOfTrip =() => {
+    fetch(`https://travelmatebackend.azurewebsites.net/api/v1/trips/sign-out/${location.state['id']}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+
+        },
+        redirect: 'follow',
+      }).then(response => response.text())
+      .then(result => {
+        console.log('signOutRes', result);
+        const newUTR='no-relation';
+        setUserTriprelation(newUTR);
+      })
+      .catch(error => console.log('error', error));
+  };
+
+  //user trip relation
+  const [userTripRelation, setUserTriprelation] =useState();
+  const checkUserTripRelation= () => {
+    fetch(`https://travelmatebackend.azurewebsites.net/api/v1/trips/is-created/${location.state['id']}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+
+      },
+      redirect: 'follow',
+    }).then(response => response.text())
+    .then(result => {
+        console.log('is', result);
+        console.log(userTripRelation);
+      if(result==='true') {
+        const newUTR='author';
+        setUserTriprelation(newUTR);
+        console.log('author');
+      }
+      else {
+        isUserSignedUpForThisTrip();
+      }
+    })
+    .catch(error => console.log('error', error));
+  };
+
+  const isUserSignedUpForThisTrip = () => {
+    fetch(`https://travelmatebackend.azurewebsites.net/api/v1/trips/is-signed-up/${location.state['id']}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+
+      },
+      redirect: 'follow',
+    }).then(response => response.text())
+    .then(result => {
+      if(result ==='true') {
+        const newUTR='signed-up';
+        setUserTriprelation(newUTR);
+      }
+      else {
+        const newUTR='no-relation';
+        setUserTriprelation(newUTR);
+      }
+    })
+  }
+  //**********
 
   // if (location.state) {
   //     setTitle(location.state['title']);
@@ -41,6 +111,7 @@ function TripDetails(props) {
       navigate('/');
     }
     else {
+      checkUserTripRelation();
       setAllowedToRender(true);
     }
   }, []);
@@ -59,7 +130,22 @@ function TripDetails(props) {
                       <TripDetailsContainer 
                         tripData={location.state}
                         signUpForTrip={signUpForTrip}
+                        signOutOfTrip={signOutOfTrip}
                       />
+                      {userTripRelation==='no-relation' &&
+                        <div className='profile-action-container'>
+                            <div onClick={()=> signUpForTrip()}>
+                                <p>Sign up for this trip</p>
+                            </div>
+                        </div>
+                        }
+                        {userTripRelation==='signed-up' &&
+                        <div className='profile-action-container'>
+                            <div onClick={()=> signOutOfTrip()}>
+                                <p>Sign out of this trip</p>
+                            </div>
+                        </div>
+                      }
 
               </header>
           </div>
