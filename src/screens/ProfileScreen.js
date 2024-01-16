@@ -15,6 +15,7 @@ function ProfileScreen(props) {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [isEdit,setIsEdit] = useState(false);
+  const [shoulDDelete, setShoulDDelete] = useState(false);
 
   const changeEmail = () => {
     fetch(`https://travelmatebackend.azurewebsites.net/api/v1/users/change-email`, {
@@ -64,6 +65,29 @@ function ProfileScreen(props) {
         console.log("result1", result);
       })
       .catch(error => console.log('error', error));
+  };
+
+  const deleteAccount = () => {
+    fetch(`https://travelmatebackend.azurewebsites.net/api/v1/auth?email=${myData['email']}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+
+        },
+        redirect: 'follow',
+      }).then(response => {
+        if(!response.ok){
+          setUserDataToShow();
+          throw new Error('Error: name and last name could not been changed');
+        }
+        return response.text();
+      })
+      .then(result => {
+        localStorage.removeItem('userToken');
+        navigate('/');
+      })
+      .catch(error => console.log('error', error)); 
   }
 
   const [allowedToRender, setAllowedToRender] = useState(false);
@@ -198,11 +222,27 @@ function ProfileScreen(props) {
                     </div>
                 </div>
 
-                <div className='profile-action-container'>
+                {(shoulDDelete==false) &&
+                  <div className='profile-action-container' onClick={()=>{
+                    console.log(shoulDDelete);
+                  setShoulDDelete(true);
+                }}>
                     <div>
                         <p>Delete account</p>
                     </div>
                 </div>
+                }
+                {(shoulDDelete==true) ?
+                  <div className='profile-action-container'>
+                    <div>
+                        <p>Are you sure that you want to delete your account?</p>
+                        <button onClick={() => {
+                          deleteAccount();
+                          }}>Yes</button>
+                        <button onClick={() => {setShoulDDelete(false); console.log(shoulDDelete);}}>Cancel</button>
+                    </div>
+                </div> :null
+                }
               </header>
             </div>
           }
