@@ -27,7 +27,39 @@ function ProfileScreen(props) {
         },
         redirect: 'follow',
         //mode: 'no-cors'
-      }).then(response => response.text())
+      }).then(response => {
+        if(!response.ok){
+          setUserDataToShow();
+          throw new Error('Error: email could not been changed');
+        }
+        return response.text();
+      })
+      .then(result => {
+        console.log("result1", result);
+      })
+      .catch(error => console.log('error', error));
+  };
+
+  const changeNameAndLastName = () => {
+    fetch(`https://travelmatebackend.azurewebsites.net/api/v1/users/name`, {
+        method: 'PATCH',
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+
+        },
+        redirect: 'follow',
+      }).then(response => {
+        if(!response.ok){
+          setUserDataToShow();
+          throw new Error('Error: name and last name could not been changed');
+        }
+        return response.text();
+      })
       .then(result => {
         console.log("result1", result);
       })
@@ -137,7 +169,13 @@ function ProfileScreen(props) {
                     </div>}
                     {isEdit&&<div onClick={()=> {
                       setIsEdit(false);
-                      changeEmail();
+
+                      if(myData['email']!= email) {
+                        changeEmail();
+                      }
+                      if(myData['firstname']!==firstName || myData['lastname']!==lastName) {
+                        changeNameAndLastName();
+                      }
                       }}>
                         <p>Save</p>
                     </div>}
