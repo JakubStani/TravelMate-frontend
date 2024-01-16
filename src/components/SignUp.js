@@ -13,6 +13,7 @@ const SignUp = (props) => {
     const [password2, setPassword2] = useState('');
     const [passwordError, setPasswordError] = useState("");
     const [isSignUpError, setIsSignUpError] = useState(false);
+    const [signupErrorMessage,setSignupErrorMessage ] = useState('');
 
     const sendSignUpData = (data) => {
         data.preventDefault();
@@ -43,6 +44,12 @@ const SignUp = (props) => {
             if(!response.ok) {
                 setPasswordError(false);
                 setIsSignUpError(true);
+                if(response.status == 400) {
+                    setSignupErrorMessage('This email already exists');
+                }
+                else {
+                    setSignupErrorMessage('');
+                }
                 throw new Error(`Network response was not ok, status: ${response.status}`);
             }
             return response.text();
@@ -68,7 +75,15 @@ const SignUp = (props) => {
             </div>
 
             {isSignUpError && (
-                    <div className="error-message">Error <br /> Account could not been created</div>
+                    <div className="error-message">
+                        Error <br /> 
+                        Account could not been created <br />
+                        {signupErrorMessage}
+                    </div>
+                )}
+                
+            {passwordError && (
+                    <div className="error-message">{passwordError}</div>
                 )}
 
             <form onSubmit={sendSignUpData}>
@@ -128,10 +143,6 @@ const SignUp = (props) => {
                         onChange={(event) => setPassword2(event.target.value)}
                     ></input>
                 </div>
-
-                {passwordError && (
-                    <div className="error-message">{passwordError}</div>
-                )}
 
                 <div className="submit-container">
                     <button className="submit-button">Create an account</button>
