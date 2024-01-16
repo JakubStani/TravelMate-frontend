@@ -15,6 +15,8 @@ const SignUp = (props) => {
     const [isSignUpError, setIsSignUpError] = useState(false);
     const [signupErrorMessage,setSignupErrorMessage ] = useState('');
 
+    const [correctlySend, setCorrectlySend] = useState(false);
+
     const sendSignUpData = (data) => {
         data.preventDefault();
         if (password !== password2) {
@@ -86,7 +88,8 @@ const SignUp = (props) => {
                     <div className="error-message">{passwordError}</div>
                 )}
 
-            <form onSubmit={sendSignUpData}>
+            {!correctlySend &&
+                <form onSubmit={sendSignUpData}>
 
                 <div name="first_name" className="input-div">
                     <input
@@ -148,6 +151,10 @@ const SignUp = (props) => {
                     <button className="submit-button">Create an account</button>
                 </div>
             </form>
+            }
+            {correctlySend &&
+                <h1>An confirmation email was sent to you</h1>
+            }
 
             <div className="login-signup-container">
                 <div className="submit">
