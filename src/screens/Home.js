@@ -401,8 +401,8 @@ function Home(props) {
               <div className='shared-plans-kinds'>
                 <div onClick={()=>setSharedPlansKindToFetch('browse?isCurrent=true')}>All</div>
                 <div onClick={()=>setSharedPlansKindToFetch('followed/events')}>Followed</div>
-                <div onClick={()=>setSharedPlansKindToFetch('signed-up?future=true')}>Signed Up</div>
-                <div onClick={()=>setSharedPlansKindToFetch('signed-up?future=false')}>My trip history</div>
+                <div onClick={()=>setSharedPlansKindToFetch('signed-up?future=true')}>Signed Up Future</div>
+                <div onClick={()=>setSharedPlansKindToFetch('signed-up?future=false')}>Signed Up Past</div>
               </div>
               <div className="content-container">
                 <div className="observed">
