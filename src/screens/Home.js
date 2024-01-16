@@ -66,7 +66,7 @@ function Home(props) {
                   : sharedPlansKindToFetch === 'signed-up?future=true' ?
                   setMessageWhenNoPlansToShow('You have not signed up for any future trip yet')
                   : sharedPlansKindToFetch === 'signed-up?future=false' ?
-                  setMessageWhenNoPlansToShow('You have not signed up for any trip yet')
+                  setMessageWhenNoPlansToShow('None off the trips that you signed up has ever started')
                   : dynamicData.length==0 ?
                   setMessageWhenNoPlansToShow("You do not follow anyone")
                   : setMessageWhenNoPlansToShow("No followed users' plans have been shared yet")
@@ -345,7 +345,9 @@ function Home(props) {
       //console.log("result1", result);
       //console.log("result2", jsonResult);
       console.log('i amgetting followed data');
-
+      if(sharedPlansKindToFetch==='followed/events') {
+        getTripPlansData();
+      }
       getFollowedData();
       getUserData();
       //console.log("trips data 1 ", tripsMockupData);
@@ -376,6 +378,9 @@ function Home(props) {
       //console.log("result1", result);
       //console.log("result2", jsonResult);
       getFollowedData();
+      if(sharedPlansKindToFetch==='followed/events') {
+        getTripPlansData();
+      }
       //console.log("trips data 1 ", tripsMockupData);
       //setSharedPlansData(tripsMockupData); //TODO: these are only mockup data. Change them for real data
     })
