@@ -11,6 +11,7 @@ import ChangePassword from './screens/ChangePassword';
 import FriendsScreen from './screens/FriendsScreen';
 import ChangePasswordInfo from './screens/ChangePasswordInfo';
 import ForgotPassword from './screens/ForgotPassword';
+import SendReport from './screens/SendReport';
 
 function App() {
 
@@ -66,6 +67,7 @@ const sendChangePasswordRequest = (email) => {
               <Route exact path='/change-password/:token' element={<ChangePassword sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
               <Route exact path='/change-password-info' element={<ChangePasswordInfo />} />
               <Route exact path='/friends' element={<FriendsScreen sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
+              <Route exact path='/send-report' element={<SendReport setLoginSignUp={setLoginSignUp} sideBarOpen={sideBarOpen} setSideBarOpen={setSideBarOpen} toggleSideBar={toggleSideBar}/>}/>
               <Route exact path='/forgot-password' element={<ForgotPassword sendChangePasswordRequest={sendChangePasswordRequest}/>} />
             </Routes>
           </header>
